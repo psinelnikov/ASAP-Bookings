@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "219967591346",
+    "firebase_url": "https://asap-bookings.firebaseio.com",
+    "project_id": "asap-bookings",
+    "storage_bucket": "asap-bookings.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:219967591346:android:965f370d77832b4ce38aab",
+        "android_client_info": {
+          "package_name": "com.asap.asapbookings"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "219967591346-ffru8l91agg080jl95r2rok7ho6gu4ng.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyASLrw12emGIo01Fkq4xQiVZxaDuce_DC0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "219967591346-ffru8l91agg080jl95r2rok7ho6gu4ng.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
