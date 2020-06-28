@@ -37,6 +37,10 @@ export default class Login extends React.Component {
 					onPress={AuthService.loginWithFacebook}
 					title="Login with Facebook"
 				/>
+				<Button
+					onPress={AuthService.loginWithGoogle}
+					title="Login with Google"
+				/>
 			</View>
 		);
 	}

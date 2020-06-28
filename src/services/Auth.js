@@ -1,4 +1,9 @@
+/*
+		SETUP API routes
+		SETUP Databases
+*/
 import * as Facebook from "expo-facebook";
+import * as Google from "expo-google-app-auth";
 
 import { config } from "../config";
 import { Firebase } from "../integrations/firebase";
@@ -22,6 +27,26 @@ export default class AuthService {
 
 			// Sign in with credential from the Facebook user.
 			await Firebase.auth().signInWithCredential(credential);
+		}
+	}
+
+	static async loginWithGoogle() {
+		try {
+			const { type, idToken, accessToken, user } = await Google.logInAsync({
+				androidClientId: config.google.androidClientId,
+				androidStandaloneAppClientId: config.google.androidClientId,
+			});
+			if (type === 'success') {
+				// Build Firebase credential with the Google access token.
+				const credential = Firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
+
+				// Sign in with credential from the Google user.
+				await Firebase.auth().signInWithCredential(credential);
+			} else {
+				console.error("failed to login with google");
+			}
+		} catch (err) {
+			console.error(err);
 		}
 	}
 
