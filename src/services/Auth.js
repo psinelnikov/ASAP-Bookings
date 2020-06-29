@@ -1,12 +1,8 @@
-/*
-		SETUP API routes
-		SETUP Databases
-*/
 import * as Facebook from "expo-facebook";
 import * as Google from "expo-google-app-auth";
 
 import { config } from "../config";
-import { Firebase } from "../integrations/firebase";
+import { Firebase, Database } from "../integrations/firebase";
 
 export default class AuthService {
 	/**
@@ -30,24 +26,48 @@ export default class AuthService {
 		}
 	}
 
+	// static async isFirstTimeUser(uid) {
+	// 	const usersRef = Database.collection("users");
+	// 	const allUsers = await usersRef.where("googleId", "==", uid).get();
+	// 	return allUsers.docs.length > 0 ? false : true;
+	// }
+
 	static async loginWithGoogle() {
 		try {
 			const { type, idToken, accessToken, user } = await Google.logInAsync({
 				androidClientId: config.google.androidClientId,
 				androidStandaloneAppClientId: config.google.androidClientId,
 			});
+
 			if (type === 'success') {
 				// Build Firebase credential with the Google access token.
 				const credential = Firebase.auth.GoogleAuthProvider.credential(idToken, accessToken);
 
 				// Sign in with credential from the Google user.
-				await Firebase.auth().signInWithCredential(credential);
+				const user = await Firebase.auth().signInWithCredential(credential);
+				const docRef = await Database.collection("users").doc(Firebase.auth().currentUser.uid).get();
+				if (docRef.exists) {
+					// user already exists
+				} else {
+					AuthService.addUserToDatabase(user);
+				}
+
 			} else {
 				console.error("failed to login with google");
 			}
 		} catch (err) {
 			console.error(err);
 		}
+	}
+
+	static addUserToDatabase(user) {
+		const { profile } = user.additionalUserInfo;
+		Database.collection("users").doc(Firebase.auth().currentUser.uid).set({
+			email: profile.email,
+			firstName: profile.given_name,
+			lastName: profile.family_name,
+			created: new Date(),
+		});
 	}
 
 	static subscribeAuthChange(callback) {

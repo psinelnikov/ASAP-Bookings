@@ -54,9 +54,11 @@ export default class App extends React.Component {
 			user: {},
 		};
 	}
+
 	componentDidMount() {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	}
+	
 	render() {
 		return (
 			// Pass user state as value to context.Provider so it can be consumed by context.Consumer
@@ -66,8 +68,8 @@ export default class App extends React.Component {
 						<Navigator>
 							<Screen
 								name="Home"
-								options={{ title: "Home" }}
 								component={Home}
+								options={{ title: "Home" }}
 							/>
 						</Navigator>
 					</NavigationContainer>
