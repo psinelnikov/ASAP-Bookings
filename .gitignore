@@ -10,6 +10,7 @@ npm-debug.*
 web-build/
 environment.js
 google-services.json
+TODO
 
 # macOS
 .DS_Store
