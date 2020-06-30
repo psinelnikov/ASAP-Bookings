@@ -1,23 +1,34 @@
 import { Firebase, Database } from "../integrations/firebase";
-
-// Auth().getCurrentUser() - instead
+import moment from "moment";
 
 export default class Bookings {
 
   static addBooking(startDate, endDate, numOfGuests) {
-    // Search for all bookings, check to see if the startDate is valid
     const uid = Firebase.auth().currentUser.uid;
-    // Add to database
-    Database.collection("bookings").add({
-      owner: uid,
-      startDate: startDate,
-      endDate: endDate,
-      guests: numOfGuests,
-      created: new Date(),
-    })
-    .then(docRef => {
-      console.log(docRef.id);
-      return docRef.id;
+    // Query for all bookings, check start / end dates
+    Database.collection("bookings").get()
+    .then(querySnapshot => {
+      if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
+        // There was a collision
+        console.log("Conflict found.")
+      } else {
+        // Add to database
+        Database.collection("bookings").add({
+          owner: uid,
+          startDate: startDate,
+          endDate: endDate,
+          guests: numOfGuests,
+          created: new Date(),
+        })
+        .then(docRef => {
+          // return reference to document
+          console.log(docRef.id);
+          return docRef.id;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+      }
     })
     .catch(err => {
       console.log(err);
@@ -25,9 +36,8 @@ export default class Bookings {
   }
 
   static viewBookings() {
-    //
     const uid = Firebase.auth().currentUser.uid;
-    // Query database
+    // Query for all bookings owned by current user
     Database.collection("bookings").where("owner", "==", uid)
     .get()
     .then(querySnapshot => {
@@ -36,18 +46,34 @@ export default class Bookings {
         const data = doc.data();
         bookings.push({
           id: doc.id,
-          created: data.created,
-          date: data.date,
-          guests: data.guests,
           owner: data.owner,
+          guests: data.guests,
+          startDate: data.startDate,
+          endDate: data.endDate,
+          created: data.created,
         });
       });
+      // return array of bookings
       console.log(bookings);
       return bookings;
     })
     .catch(err => {
       console.log(err);
     });
+  }
+
+  // Checks to see if there are any collisions with dates when making a new booking
+  static checkCollisions(querySnapshot, startDate, endDate) {
+    for (let doc of querySnapshot.docs) {
+      const data = doc.data();
+      const newDate = { start: startDate.valueOf(), end: endDate.valueOf() };
+      const currDate = { start: data.startDate.seconds * 1000, end: data.endDate.seconds * 1000 };
+      if (moment(newDate.start).isBetween(moment(currDate.start), moment(currDate.end)) ||
+          moment(newDate.end).isBetween(moment(currDate.start), moment(currDate.end))) {
+        return true;
+      }
+    }
+    return false;
   }
 
 }
