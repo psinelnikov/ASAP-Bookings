@@ -46,6 +46,8 @@ const { Navigator, Screen } = createStackNavigator();
 
 import AuthService from "./src/services/Auth";
 import Login from "./pages/Login";
+import Booking from "./pages/Booking";
+import Takeout from "./pages/Takeout";
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -60,6 +62,7 @@ export default class App extends React.Component {
 	}
 
 	render() {
+		const { route } = this.props;
 		return (
 			// Pass user state as value to context.Provider so it can be consumed by context.Consumer
 			<userContext.Provider value={this.state.user}>
@@ -70,6 +73,16 @@ export default class App extends React.Component {
 								name="Home"
 								options={{ title: "Home" }}
 								component={Home}
+							/>
+							<Screen
+								name="Booking"
+								options={{ title: "Booking" }}
+								component={Booking}
+							/>
+							<Screen
+								name="Takeout"
+								options={{ title: "Take Out" }}
+								component={Takeout}
 							/>
 						</Navigator>
 					</NavigationContainer>
