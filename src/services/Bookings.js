@@ -38,8 +38,7 @@ export default class Bookings {
   static viewBookings() {
     const uid = Firebase.auth().currentUser.uid;
     // Query for all bookings owned by current user
-    Database.collection("bookings").where("owner", "==", uid)
-    .get()
+    Database.collection("bookings").where("owner", "==", uid).get()
     .then(querySnapshot => {
       let bookings = [];
       querySnapshot.forEach(doc => {

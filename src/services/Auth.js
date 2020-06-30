@@ -22,15 +22,15 @@ export default class AuthService {
 			const credential = Firebase.auth.FacebookAuthProvider.credential(token);
 
 			// Sign in with credential from the Facebook user.
-			await Firebase.auth().signInWithCredential(credential);
+			const user = await Firebase.auth().signInWithCredential(credential);
+			const docRef = await Database.collection("users").doc(Firebase.auth().currentUser.uid).get();
+			if (docRef.exists) {
+				// user already exists
+			} else {
+				AuthService.addUserToDatabase(user);
+			}
 		}
 	}
-
-	// static async isFirstTimeUser(uid) {
-	// 	const usersRef = Database.collection("users");
-	// 	const allUsers = await usersRef.where("googleId", "==", uid).get();
-	// 	return allUsers.docs.length > 0 ? false : true;
-	// }
 
 	static async loginWithGoogle() {
 		try {
@@ -51,7 +51,6 @@ export default class AuthService {
 				} else {
 					AuthService.addUserToDatabase(user);
 				}
-
 			} else {
 				console.error("failed to login with google");
 			}
