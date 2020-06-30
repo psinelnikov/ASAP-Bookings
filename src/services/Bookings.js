@@ -3,14 +3,14 @@ import moment from "moment";
 
 export default class Bookings {
 
-  static addBooking(startDate, endDate, numOfGuests) {
+  static addBooking(startDate, endDate, numOfGuests) { // this can be refactored later
     const uid = Firebase.auth().currentUser.uid;
     // Query for all bookings, check start / end dates
     Database.collection("bookings").get()
     .then(querySnapshot => {
       if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
         // There was a collision
-        console.log("Conflict found.")
+        console.log("there was a conflict in dates");
       } else {
         // Add to database
         Database.collection("bookings").add({
@@ -60,6 +60,16 @@ export default class Bookings {
     .catch(err => {
       console.log(err);
     });
+  }
+
+  // TO-DO
+  static cancelBooking(id) {
+    // check if current user owns this booking id
+  }
+
+  // TO-DO
+  static updateBooking(id) {
+    // check if current user owns this booking id
   }
 
   // Checks to see if there are any collisions with dates when making a new booking
