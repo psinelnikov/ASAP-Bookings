@@ -1,39 +1,30 @@
 import React from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from "react-native";
 
+import { Firebase, Database } from "../src/integrations/firebase";
 import AuthService from "../src/services/Auth";
-import Bookings from "../src/services/Bookings";
-
 import { userContext } from "../src/userContext";
 
-export default function Home() {
-	// const avatar = user.photoURL && (
-	// 	<Image style={{ width: 50, height: 50 }} source={{ uri: user.photoURL }} />
-	// );
-	//console.log(userContext._currentValue);
+export default function Home({ navigation }) {
 	const userData = userContext._currentValue;
 
-	handleAddBooking = () => {
-		// start 1 hour later, lasting 1 hour
-		const startDate =  new Date(new Date().getTime() + 60 * 60000);
-		const endDate =  new Date(startDate.getTime() + 60 * 60000);
-		const guestCount = 8;
-		Bookings.addBooking(startDate, endDate, guestCount);
-	}
+	const user = Firebase.auth().currentUser;
+	console.log(user);
 
-	handleViewBooking = () => {
-		Bookings.viewBookings();
-	}
+	const avatar = user && user.photoURL && (
+		<Image style={{ width: 48, height: 48, marginBottom: 10 }} source={{ uri: userData.photoURL }} />
+	);
 
 	return (
 		<View style={styles.container}>
-			{/* <Text>Home!!!!</Text> */}
-			<Text>Welcome {userData.displayName}</Text>
-			<Text>You are logged in!</Text>
-			{/* {avatar} */}
-			<Button onPress={handleAddBooking} title="Add Booking" />
-			<Button onPress={handleViewBooking} title="View Bookings" />
-			<Button onPress={AuthService.logout} title="Logout" />
+			{avatar}
+			<Text style={styles.header}>Welcome {user && user.displayName}!</Text>
+			<TouchableOpacity style={styles.button} onPress={() => navigation.navigate("ViewBookings")}>
+				<Text>View Bookings</Text>
+			</TouchableOpacity>
+			<TouchableOpacity style={styles.button} onPress={AuthService.logout}>
+				<Text>Logout</Text>
+			</TouchableOpacity>
 		</View>
 	);
 }
@@ -44,5 +35,14 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	header: {
+		marginBottom: 20
+	},
+	button: {
+    alignItems: "center",
+    backgroundColor: "#DDDDDD",
+		padding: 10,
+		marginBottom: 20
 	},
 });

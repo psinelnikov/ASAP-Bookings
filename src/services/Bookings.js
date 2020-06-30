@@ -4,60 +4,63 @@ import moment from "moment";
 export default class Bookings {
 
   static addBooking(startDate, endDate, numOfGuests) { // this can be refactored later
-    const uid = Firebase.auth().currentUser.uid;
-    // Query for all bookings, check start / end dates
-    Database.collection("bookings").get()
-    .then(querySnapshot => {
-      if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
-        // There was a collision
-        console.log("there was a conflict in dates");
-      } else {
-        // Add to database
-        Database.collection("bookings").add({
-          owner: uid,
-          startDate: startDate,
-          endDate: endDate,
-          guests: numOfGuests,
-          created: new Date(),
-        })
-        .then(docRef => {
-          // return reference to document
-          console.log(docRef.id);
-          return docRef.id;
-        })
-        .catch(err => {
-          console.log(err);
-        });
-      }
-    })
-    .catch(err => {
-      console.log(err);
+    return new Promise((resolve, reject) => {
+      const uid = Firebase.auth().currentUser.uid;
+      // Query for all bookings, check start / end dates
+      Database.collection("bookings").get()
+      .then(querySnapshot => {
+        if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
+          // There was a collision
+          reject("there was a conflict in dates");
+        } else {
+          // Add to database
+          Database.collection("bookings").add({
+            owner: uid,
+            startDate: startDate,
+            endDate: endDate,
+            guests: numOfGuests,
+            created: new Date(),
+          })
+          .then(docRef => {
+            // return reference to document
+            //console.log("bookings:" + docRef.id);
+            //return docRef.id;
+            resolve(docRef.id);
+          })
+          .catch(err => {
+            reject(err);
+          });
+        }
+      })
+      .catch(err => {
+        reject(err);
+      });
     });
   }
 
   static viewBookings() {
-    const uid = Firebase.auth().currentUser.uid;
-    // Query for all bookings owned by current user
-    Database.collection("bookings").where("owner", "==", uid).get()
-    .then(querySnapshot => {
-      let bookings = [];
-      querySnapshot.forEach(doc => {
-        const data = doc.data();
-        bookings.push({
-          id: doc.id,
-          owner: data.owner,
-          guests: data.guests,
-          startDate: data.startDate,
-          endDate: data.endDate,
-          created: data.created,
+    return new Promise((resolve, reject) => {
+      const uid = Firebase.auth().currentUser.uid;
+      // Query for all bookings owned by current user
+      Database.collection("bookings").where("owner", "==", uid).get()
+      .then(querySnapshot => {
+        let bookings = [];
+        querySnapshot.forEach(doc => {
+          const data = doc.data();
+          bookings.push({
+            id: doc.id,
+            owner: data.owner,
+            guests: data.guests,
+            startDate: data.startDate,
+            endDate: data.endDate,
+            created: data.created,
+          });
         });
+        resolve(bookings);
+      })
+      .catch(err => {
+        reject(err);
       });
-      // return array of bookings
-      console.log(bookings);
-      return bookings;
-    })
-    .catch(err => {
-      console.log(err);
     });
   }
 
