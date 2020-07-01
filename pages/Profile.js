@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
 	StyleSheet,
 	Text,
@@ -16,7 +16,6 @@ export default function Home({ navigation }) {
 	const userData = userContext._currentValue;
 
 	const user = Firebase.auth().currentUser;
-	//console.log(user);
 
 	const avatar = user && user.photoURL && (
 		<Image
@@ -27,17 +26,10 @@ export default function Home({ navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Booking", { name: "Jane" })}
-			>
-				<Text>Make a Booking</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Takeout")}
-			>
-				<Text>Take Out Order</Text>
+			{avatar}
+			<Text style={styles.header}>Welcome {user && user.displayName}!</Text>
+			<TouchableOpacity style={styles.button} onPress={AuthService.logout}>
+				<Text>Logout</Text>
 			</TouchableOpacity>
 		</View>
 	);

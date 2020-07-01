@@ -1,33 +1,20 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Image, FlatList } from "react-native";
-import { CalendarList } from "react-native-calendars";
-import DateTimePicker from "@react-native-community/datetimepicker";
-import moment from "moment";
+import { StyleSheet, Text, View, TouchableOpacity, Button, Image, FlatList } from "react-native";
 import { Picker } from "@react-native-community/picker";
+import { CalendarList } from "react-native-calendars";
+import moment from "moment";
 
+import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
-//import bookings from "../data/bookings.json";
 import PhoneService from "../src/services/Phone";
 
-export default Booking = ({ navigation }) => {
+export default function Booking({ navigation }) {
 	const [date, setDate] = useState(new Date());
-	const [show, setShow] = useState(false);
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
 	);
 	const [people, setPeople] = useState(1);
-	// const avatar = user.photoURL && (
-	// 	<Image style={{ width: 50, height: 50 }} source={{ uri: user.photoURL }} />
-	// );
-
-	const setTime = (event, selectedTime) => {
-		//console.log(selectedTime.toLocaleString());
-		//new Date(date.getFullYear(), date.getMonth(), date.getDay(), hours, minutes, 0, 0)
-		//setDate(selectedTime);
-		setShow(false);
-		//console.log(selectedTime);
-		//console.log(date);
-	};
+	const today = new Date();
 
 	useEffect(() => {
 		// redirect to phone screen if no phone # is saved
@@ -40,62 +27,58 @@ export default Booking = ({ navigation }) => {
 		});
 	}, []);
 
-	const showTimepicker = () => {
-		setShow(true);
-	};
 	return (
 		<View style={styles.container}>
-			<View style={{ flex: 6, flexDirection: "column" }}>
+			<View style={{ flex: 5, flexDirection: "column" }}>
 				<CalendarList
 					futureScrollRange={3}
 					showScrollIndicator={true}
 					horizontal={true}
 					pastScrollRange={0}
 					pagingEnabled={true}
-					markedDates={{ [markedDates]: { selected: true } }}
+					markedDates={{
+						[markedDates]: { selected: true, selectedColor: "#aaa" },
+					}}
 					onDayPress={(date) => {
-						console.log(date);
-						setDate(new Date(date.year, date.month, date.day));
+						if (moment(today).date() !== date.day) {
+							setDate(new Date(date.year, date.month, date.day, 0, 0, 0, 0));
+						} else {
+							setDate(today);
+						}
 						setMarkedDates(date.dateString);
 					}}
 				/>
 			</View>
-			<View style={{ flex: 1, flexDirection: "row" }}>
-				<Text>Number of People</Text>
+			<View
+				style={{
+					flex: 1,
+					flexDirection: "row",
+					justifyContent: "center",
+					alignItems: "center",
+				}}
+			>
+				<Text>Number of People: </Text>
 				<Picker
 					selectedValue={people}
-					style={{ height: 50, width: 100 }}
-					onValueChange={(number, itemIndex) => {
-						setPeople(number);
-						//console.log(people);
-					}}
+					style={{ width: 200 }}
+					onValueChange={(itemValue, itemIndex) => setPeople(itemValue)}
 				>
-					<Picker.Item label="1" value="1" />
-					<Picker.Item label="2" value="2" />
+					<Picker.Item label="1 Person" value={1} />
+					<Picker.Item label="2 People" value={2} />
+					<Picker.Item label="3 People" value={3} />
+					<Picker.Item label="4 People" value={4} />
+					<Picker.Item label="5 People" value={5} />
+					<Picker.Item label="6+ People" value={6} />
 				</Picker>
 			</View>
-			<View style={{ flex: 2, flexDirection: "column" }}>
-				<Button onPress={showTimepicker} title="Show time picker!" />
-				{show && (
-					<DateTimePicker
-						mode="time"
-						value={date}
-						onChange={setTime}
-						minuteInterval={30}
-					/>
-				)}
+			<View style={{ flex: 1 }}>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() => navigation.navigate("Times", { date })}
+				>
+					<Text>View Available Times</Text>
+				</TouchableOpacity>
 			</View>
-			<View style={{ flex: 1, flexDirection: "row" }}>
-				{/* <FlatList
-					data={bookings}
-					renderItem={({ item }) => {
-						return <Text>{item.availableTime}</Text>;
-					}}
-				/> */}
-			</View>
-
-			{/* {avatar} */}
-			{/* <Button onPress={AuthService.logout} title="Logout" /> */}
 		</View>
 	);
 };
@@ -106,5 +89,15 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	fixToText: {
+		flexDirection: "row",
+		justifyContent: "space-between",
+	},
+	button: {
+		alignItems: "center",
+		backgroundColor: "#DDDDDD",
+		padding: 10,
+		marginBottom: 20,
 	},
 });
