@@ -11,7 +11,8 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route }) => {
-	const { date } = route.params;
+	const { date, people } = route.params;
+	const [blockedTime, setBlockedTime] = useState([]);
 	const [bookings, setBookings] = useState([]);
 
 	// bookTime = () => {};
@@ -27,29 +28,45 @@ export default Booking = ({ route }) => {
 		let endDate = moment(startDate).hours(16).minutes(59);
 		let difference = moment(endDate).diff(startDate);
 		let minutes = difference / 1000 / 60; // 1 minute interval
-		let interval = 20; // minutes
+		let interval = people > 2 ? 60 : 30; // minutes
 		let id = 0;
 
 		// Calculates the frontend values for booking times
 		for (let i = minutes; i > 0; i -= interval) {
+			// if () {
 			endDate = moment(startDate).add(interval, "m").toDate();
 			bookings.push({
 				key: ++id,
-				owner: "me",
+				guests: people,
 				startDate: startDate,
 				endDate: endDate,
 			});
 
 			startDate = endDate;
 		}
+
+		//}
 	}, []);
 
 	const keyExtractor = (item, index) => index.toString();
 
 	const renderItem = ({ item }) => (
 		<ListItem
-			title={moment(item.startDate).format("h:mm")}
-			onPress={() => console.log("TODO")}
+			title={`${moment(item.startDate).format("h:mm")} - ${moment(
+				item.endDate
+			).format("h:mm")}`}
+			onPress={async () => {
+				const id = await Bookings.addBooking(
+					item.startDate,
+					item.endDate,
+					item.guests
+				);
+				if (id) {
+					console.log(`Booking Successful for ID: ${id}!`);
+					return;
+				}
+				console.log("Booking Unsuccessful!");
+			}}
 			bottomDivider
 			chevron
 		/>

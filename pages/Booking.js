@@ -48,7 +48,7 @@ export default Booking = ({ navigation }) => {
 				<Text>Number of People: </Text>
 				<Picker
 					selectedValue={people}
-					style={{ width: 200 }}
+					style={{ width: 140 }}
 					onValueChange={(itemValue, itemIndex) => setPeople(itemValue)}
 				>
 					<Picker.Item label="1 Person" value={1} />
@@ -62,7 +62,7 @@ export default Booking = ({ navigation }) => {
 			<View style={{ flex: 1 }}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => navigation.navigate("Times", { date })}
+					onPress={() => navigation.navigate("Times", { date, people })}
 				>
 					<Text>View Available Times</Text>
 				</TouchableOpacity>
