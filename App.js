@@ -26,10 +26,6 @@ export default class App extends React.Component {
 	componentDidMount() {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	}
-
-	refreshBookings = () => {
-		console.log("k")
-	}
 	
 	render() {
 		return (

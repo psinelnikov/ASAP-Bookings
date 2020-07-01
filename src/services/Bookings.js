@@ -3,6 +3,7 @@ import moment from "moment";
 
 export default class Bookings {
 
+  // check to see if in operating hours for example 9-5
   static addBooking(startDate, endDate, numOfGuests) { // this can be refactored later
     return new Promise((resolve, reject) => {
       const uid = Firebase.auth().currentUser.uid;
