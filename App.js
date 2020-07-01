@@ -108,10 +108,6 @@ export default class App extends React.Component {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	}
 
-	refreshBookings = () => {
-		console.log("k");
-	};
-
 	render() {
 		const { route } = this.props;
 		return (

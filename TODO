@@ -8,5 +8,5 @@ NOTES:
   ☐ 
   ☐ 
   ☐ 
-  ☐ Pass parameters routes - https://reactnavigation.org/docs/params
+  ✔ Pass parameters routes - https://reactnavigation.org/docs/params @done(20-06-30 18:27)
   ✔ Clear Warnings - https://github.com/firebase/firebase-js-sdk/issues/97 @done(20-06-29 21:04)
