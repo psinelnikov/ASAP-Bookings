@@ -24,6 +24,17 @@ import Takeout from "./pages/Takeout";
 import Phone from "./pages/Phone";
 // import PushNotification from "./src/services/PushNotification";
 import Times from "./pages/Times";
+import { YellowBox } from "react-native";
+import _ from "lodash";
+
+// Fixes stupid yellow box Firebase error
+YellowBox.ignoreWarnings(["Setting a timer"]);
+const _console = _.clone(console);
+console.warn = (message) => {
+	if (message.indexOf("Setting a timer") <= -1) {
+		_console.warn(message);
+	}
+};
 
 function ProfileStack() {
 	return (

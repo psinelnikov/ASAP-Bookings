@@ -75,11 +75,17 @@ export default Booking = ({ route }) => {
 	return (
 		<View style={styles.container}>
 			<View style={{ flex: 1, flexDirection: "row" }}>
-				<FlatList
-					keyExtractor={keyExtractor}
-					data={bookings}
-					renderItem={renderItem}
-				/>
+				{bookings.length ? (
+					<FlatList
+						keyExtractor={keyExtractor}
+						data={bookings}
+						renderItem={renderItem}
+					/>
+				) : (
+					<Text style={{ alignSelf: "center" }}>
+						Sorry, there are no available bookings for this day
+					</Text>
+				)}
 			</View>
 		</View>
 	);

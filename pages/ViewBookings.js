@@ -15,9 +15,12 @@ export default function ViewBookings({ route, navigation }) {
 
 	const keyExtractor = (item, index) => index.toString();
 
-	useEffect(async () => {
-		setBookings(await Bookings.viewBookings());
-		console.log(await Bookings.viewBookings());
+	useEffect(() => {
+		const fetchBookings = async () => {
+			const data = await Bookings.viewBookings();
+			setBookings(data);
+		};
+		fetchBookings();
 	}, []);
 
 	const renderItem = ({ item }) => (
@@ -25,7 +28,11 @@ export default function ViewBookings({ route, navigation }) {
 			title={`${moment(item.startDate.toDate()).format("h:mm")} - ${moment(
 				item.endDate.toDate()
 			).format("h:mm")}`}
-			onPress={() => {}}
+			onPress={async () => {
+				//console.log(item.id);
+				await Bookings.cancelBooking(item.id);
+				setBookings(await Bookings.viewBookings());
+			}}
 			bottomDivider
 			chevron
 		/>
