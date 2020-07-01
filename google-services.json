@@ -1,44 +1,44 @@
 {
-  "project_info": {
-    "project_number": "227762560861",
-    "firebase_url": "https://asap-bookings-46b54.firebaseio.com",
-    "project_id": "asap-bookings-46b54",
-    "storage_bucket": "asap-bookings-46b54.appspot.com"
-  },
-  "client": [
-    {
-      "client_info": {
-        "mobilesdk_app_id": "1:227762560861:android:9b883df0a21b52415892b4",
-        "android_client_info": {
-          "package_name": "ca.asap.bookings"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "227762560861-l5rrv55vl33h9mf053ij2kden8k15kgl.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "ca.asap.bookings",
-            "certificate_hash": "155812a6ec1e61dd7bc86b3dfc5b958fa212b7ac"
-          }
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyCX8-ce7mdNF_C0bccx2HH2DmEC2CVQ6qU"
-        }
-      ],
-      "services": {
-        "appinvite_service": {
-          "other_platform_oauth_client": [
-            {
-              "client_id": "227762560861-ap40s6cm5r6jo8a95m0rjngflf2nto1u.apps.googleusercontent.com",
-              "client_type": 3
-            }
-          ]
-        }
-      }
-    }
-  ],
-  "configuration_version": "1"
+	"project_info": {
+		"project_number": "219967591346",
+		"firebase_url": "https://asap-bookings.firebaseio.com",
+		"project_id": "asap-bookings",
+		"storage_bucket": "asap-bookings.appspot.com"
+	},
+	"client": [
+		{
+			"client_info": {
+				"mobilesdk_app_id": "1:219967591346:android:965f370d77832b4ce38aab",
+				"android_client_info": {
+					"package_name": "com.asap.bookings"
+				}
+			},
+			"oauth_client": [
+				{
+					"client_id": "797767613914-rvccest2sod2mpaspvh85fkte71lf5d7.apps.googleusercontent.com",
+					"client_type": 1,
+					"android_info": {
+						"package_name": "com.asap.bookings",
+						"certificate_hash": "c883e5f8b01b2989ac558c942bac998f1357fd00"
+					}
+				}
+			],
+			"api_key": [
+				{
+					"current_key": "AIzaSyASLrw12emGIo01Fkq4xQiVZxaDuce_DC0"
+				}
+			],
+			"services": {
+				"appinvite_service": {
+					"other_platform_oauth_client": [
+						{
+							"client_id": "797767613914-rvccest2sod2mpaspvh85fkte71lf5d7.apps.googleusercontent.com",
+							"client_type": 3
+						}
+					]
+				}
+			}
+		}
+	],
+	"configuration_version": "1"
 }

@@ -1,4 +1,4 @@
-import 'react-native-gesture-handler';
+import "react-native-gesture-handler";
 import * as React from "react";
 
 import Home from "./pages/Home";
@@ -16,6 +16,7 @@ import AuthService from "./src/services/Auth";
 import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import Takeout from "./pages/Takeout";
+import Times from "./pages/Times";
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -30,9 +31,9 @@ export default class App extends React.Component {
 	}
 
 	refreshBookings = () => {
-		console.log("k")
-	}
-	
+		console.log("k");
+	};
+
 	render() {
 		const { route } = this.props;
 		return (
@@ -65,6 +66,11 @@ export default class App extends React.Component {
 								name="Takeout"
 								options={{ title: "Take Out" }}
 								component={Takeout}
+							/>
+							<Screen
+								name="Times"
+								options={{ title: "Booking Times" }}
+								component={Times}
 							/>
 						</Navigator>
 					</NavigationContainer>
