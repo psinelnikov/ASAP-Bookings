@@ -16,6 +16,8 @@ import AuthService from "./src/services/Auth";
 import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import Takeout from "./pages/Takeout";
+import Phone from "./pages/Phone";
+import PushNotification from "./src/services/PushNotification";
 
 export default class App extends React.Component {
 	constructor(props) {
@@ -29,10 +31,6 @@ export default class App extends React.Component {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	}
 
-	refreshBookings = () => {
-		console.log("k")
-	}
-	
 	render() {
 		const { route } = this.props;
 		return (
@@ -66,15 +64,33 @@ export default class App extends React.Component {
 								options={{ title: "Take Out" }}
 								component={Takeout}
 							/>
+							<Screen
+								name="Phone"
+								options={{ title: "Phone" }}
+								component={Phone}
+							/>
 						</Navigator>
 					</NavigationContainer>
 				) : (
 					<Login />
 				)}
+				<PushNotification />
 			</userContext.Provider>
 		);
 	}
 }
+
+// useEffect(() => {
+// 	Notifications.scheduleNotificationAsync({
+// 		content: {
+// 			title: "Time's up!",
+// 			body: 'Change sides!',
+// 		},
+// 		trigger: {
+// 			seconds: 5,
+// 		},
+// 	});
+// }, []);
 
 // export default function App({ navigation }) {
 // 	const [user, setUser] = useState({});

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { StyleSheet, Text, View, Button, Image, FlatList } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -6,9 +6,10 @@ import moment from "moment";
 import { Picker } from "@react-native-community/picker";
 
 import AuthService from "../src/services/Auth";
-import bookings from "../data/bookings.json";
+//import bookings from "../data/bookings.json";
+import PhoneService from "../src/services/Phone";
 
-export default Booking = () => {
+export default Booking = ({ navigation }) => {
 	const [date, setDate] = useState(new Date());
 	const [show, setShow] = useState(false);
 	const [markedDates, setMarkedDates] = useState(
@@ -20,13 +21,24 @@ export default Booking = () => {
 	// );
 
 	const setTime = (event, selectedTime) => {
-		console.log(selectedTime.toLocaleString());
+		//console.log(selectedTime.toLocaleString());
 		//new Date(date.getFullYear(), date.getMonth(), date.getDay(), hours, minutes, 0, 0)
 		//setDate(selectedTime);
 		setShow(false);
 		//console.log(selectedTime);
 		//console.log(date);
 	};
+
+	useEffect(() => {
+		// redirect to phone screen if no phone # is saved
+		const hasPhoneNo = PhoneService.userHasPhoneNo()
+		.then(result => {
+			if (!result) navigation.navigate("Phone");
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}, []);
 
 	const showTimepicker = () => {
 		setShow(true);
@@ -55,7 +67,7 @@ export default Booking = () => {
 					style={{ height: 50, width: 100 }}
 					onValueChange={(number, itemIndex) => {
 						setPeople(number);
-						console.log(people);
+						//console.log(people);
 					}}
 				>
 					<Picker.Item label="1" value="1" />
@@ -74,12 +86,12 @@ export default Booking = () => {
 				)}
 			</View>
 			<View style={{ flex: 1, flexDirection: "row" }}>
-				<FlatList
+				{/* <FlatList
 					data={bookings}
 					renderItem={({ item }) => {
 						return <Text>{item.availableTime}</Text>;
 					}}
-				/>
+				/> */}
 			</View>
 
 			{/* {avatar} */}

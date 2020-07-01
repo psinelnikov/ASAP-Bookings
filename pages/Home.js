@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -16,7 +16,7 @@ export default function Home({ navigation }) {
 	const userData = userContext._currentValue;
 
 	const user = Firebase.auth().currentUser;
-	console.log(user);
+	//console.log(user);
 
 	const avatar = user && user.photoURL && (
 		<Image
