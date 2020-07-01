@@ -4,71 +4,69 @@ import Icon from "react-native-vector-icons/FontAwesome";
 
 import AuthService from "../src/services/Auth";
 
-export default class Login extends React.Component {
+export default Login = () => {
 	//state = { user: null };
 
 	// componentDidMount() {
 	// 	AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	// }
 
-	render() {
-		// 	const { user } = this.state;
+	// 	const { user } = this.state;
 
-		// 	if (user) {
-		// 		const avatar = user.photoURL && (
-		// 			<Image
-		// 				style={{ width: 50, height: 50 }}
-		// 				source={{ uri: user.photoURL }}
-		// 			/>
-		// 		);
+	// 	if (user) {
+	// 		const avatar = user.photoURL && (
+	// 			<Image
+	// 				style={{ width: 50, height: 50 }}
+	// 				source={{ uri: user.photoURL }}
+	// 			/>
+	// 		);
 
-		// 		return (
-		// 			<View style={styles.container}>
-		// 				<Text>You are logged in!</Text>
-		// 				{avatar}
-		// 				<Button onPress={AuthService.logout} title="Logout" />
-		// 			</View>
-		// 		);
-		// 	}
+	// 		return (
+	// 			<View style={styles.container}>
+	// 				<Text>You are logged in!</Text>
+	// 				{avatar}
+	// 				<Button onPress={AuthService.logout} title="Logout" />
+	// 			</View>
+	// 		);
+	// 	}
 
-		return (
-			<>
-				<View style={{ flex: 1, justifyContent: "center" }}>
-					<Text
-						style={{
-							fontSize: 80,
-							textAlign: "center",
-						}}
-					>
-						ASAP Bookings
-					</Text>
-				</View>
-				<View style={styles.container}>
-					<Icon.Button
-						style={{ height: 50 }}
-						name="facebook"
-						backgroundColor="#3b5998"
-						onPress={AuthService.loginWithFacebook}
-					>
-						Login with Facebook
-					</Icon.Button>
-					{/* <Button
+	return (
+		<>
+			<View style={{ flex: 1, justifyContent: "center" }}>
+				<Text
+					style={{
+						fontSize: 80,
+						textAlign: "center",
+					}}
+				>
+					ASAP Bookings
+				</Text>
+			</View>
+			<View style={styles.container}>
+				<Icon.Button
+					style={{ height: 50 }}
+					name="facebook"
+					backgroundColor="#3b5998"
+					onPress={AuthService.loginWithFacebook}
+				>
+					Login with Facebook
+				</Icon.Button>
+				{/* <Button
 					onPress={AuthService.loginWithFacebook}
 					title="Login with Facebook"
 				/> */}
-					<Icon.Button
-						style={{ height: 50 }}
-						name="google"
-						backgroundColor="#DB4437"
-						onPress={AuthService.loginWithGoogle}
-					>
-						Login with Google
-					</Icon.Button>
-				</View>
-			</>
-		);
-	}
-}
+				<Icon.Button
+					style={{ height: 50 }}
+					name="google"
+					backgroundColor="#DB4437"
+					onPress={AuthService.loginWithGoogle}
+				>
+					Login with Google
+				</Icon.Button>
+			</View>
+		</>
+	);
+};
 
 const styles = StyleSheet.create({
 	container: {
