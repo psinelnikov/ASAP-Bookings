@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { StyleSheet, Text, View, Button, Image } from "react-native";
+import { StyleSheet, Text, View, Button, Image, FlatList } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import { Picker } from "@react-native-community/picker";
 
 import AuthService from "../src/services/Auth";
+import bookings from "../data/bookings.json";
 
 export default Booking = () => {
 	const [date, setDate] = useState(new Date());
@@ -32,7 +33,7 @@ export default Booking = () => {
 	};
 	return (
 		<View style={styles.container}>
-			<View style={{ flex: 4, flexDirection: "column" }}>
+			<View style={{ flex: 6, flexDirection: "column" }}>
 				<CalendarList
 					futureScrollRange={3}
 					showScrollIndicator={true}
@@ -46,6 +47,8 @@ export default Booking = () => {
 						setMarkedDates(date.dateString);
 					}}
 				/>
+			</View>
+			<View style={{ flex: 1, flexDirection: "row" }}>
 				<Text>Number of People</Text>
 				<Picker
 					selectedValue={people}
@@ -55,8 +58,8 @@ export default Booking = () => {
 						console.log(people);
 					}}
 				>
-					<Picker.Item label="1" value={1} />
-					<Picker.Item label="2" value={2} />
+					<Picker.Item label="1" value="1" />
+					<Picker.Item label="2" value="2" />
 				</Picker>
 			</View>
 			<View style={{ flex: 2, flexDirection: "column" }}>
@@ -69,6 +72,14 @@ export default Booking = () => {
 						minuteInterval={30}
 					/>
 				)}
+			</View>
+			<View style={{ flex: 1, flexDirection: "row" }}>
+				<FlatList
+					data={bookings}
+					renderItem={({ item }) => {
+						return <Text>{item.availableTime}</Text>;
+					}}
+				/>
 			</View>
 
 			{/* {avatar} */}

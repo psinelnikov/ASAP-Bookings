@@ -9,7 +9,10 @@ export default function Home({ navigation }) {
 	// );
 	return (
 		<View style={styles.container}>
-			<Text>Home!!!!</Text>
+			<View>
+				<Text>Home!!!!</Text>
+			</View>
+
 			<Text>You are logged in!</Text>
 			<Button
 				title="Make a Booking"
