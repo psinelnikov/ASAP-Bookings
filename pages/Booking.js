@@ -1,19 +1,31 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { StyleSheet, Text, View, TouchableOpacity, Button, Image, FlatList } from "react-native";
 import { Picker } from "@react-native-community/picker";
 import { CalendarList } from "react-native-calendars";
 import moment from "moment";
 
 import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
+import PhoneService from "../src/services/Phone";
 
-export default Booking = ({ navigation }) => {
+export default function Booking({ navigation }) {
 	const [date, setDate] = useState(new Date());
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
 	);
 	const [people, setPeople] = useState(1);
 	const today = new Date();
+
+	useEffect(() => {
+		// redirect to phone screen if no phone # is saved
+		const hasPhoneNo = PhoneService.userHasPhoneNo()
+		.then(result => {
+			if (!result) navigation.navigate("Phone");
+		})
+		.catch(err => {
+			console.log(err);
+		});
+	}, []);
 
 	return (
 		<View style={styles.container}>

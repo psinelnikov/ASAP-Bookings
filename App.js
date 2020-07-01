@@ -21,6 +21,8 @@ import AuthService from "./src/services/Auth";
 import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import Takeout from "./pages/Takeout";
+import Phone from "./pages/Phone";
+// import PushNotification from "./src/services/PushNotification";
 import Times from "./pages/Times";
 
 function ProfileStack() {
@@ -72,6 +74,12 @@ function AddBookingsStack() {
 				name="Times"
 				options={{ title: "Booking Times" }}
 				component={Times}
+			/>
+			<Screen
+				name="Phone"
+				options={{ title: "Phone" }}
+				component={Phone}
+				tabBarOptions
 			/>
 		</Stack.Navigator>
 	);
@@ -168,10 +176,23 @@ export default class App extends React.Component {
 				) : (
 					<Login />
 				)}
+				{/* <PushNotification /> */}
 			</userContext.Provider>
 		);
 	}
 }
+
+// useEffect(() => {
+// 	Notifications.scheduleNotificationAsync({
+// 		content: {
+// 			title: "Time's up!",
+// 			body: 'Change sides!',
+// 		},
+// 		trigger: {
+// 			seconds: 5,
+// 		},
+// 	});
+// }, []);
 
 // export default function App({ navigation }) {
 // 	const [user, setUser] = useState({});

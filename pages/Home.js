@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -16,6 +16,14 @@ export default function Home({ navigation }) {
 	const userData = userContext._currentValue;
 
 	const user = Firebase.auth().currentUser;
+	//console.log(user);
+
+	const avatar = user && user.photoURL && (
+		<Image
+			style={{ width: 48, height: 48, marginBottom: 10 }}
+			source={{ uri: userData.photoURL }}
+		/>
+	);
 
 	return (
 		<View style={styles.container}>

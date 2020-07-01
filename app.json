@@ -22,7 +22,8 @@
 		},
 		"android": {
 			"package": "ca.asap.bookings",
-			"googleServicesFile": "./google-services.json"
+			"googleServicesFile": "./google-services.json",
+			"useNextNotificationsApi": true
 		}
 	}
 }
