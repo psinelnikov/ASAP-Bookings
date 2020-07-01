@@ -23,9 +23,6 @@ export default class Bookings {
             created: new Date(),
           })
           .then(docRef => {
-            // return reference to document
-            //console.log("bookings:" + docRef.id);
-            //return docRef.id;
             resolve(docRef.id);
           })
           .catch(err => {

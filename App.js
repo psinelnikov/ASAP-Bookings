@@ -22,7 +22,7 @@ import Login from "./pages/Login";
 import Booking from "./pages/Booking";
 import Takeout from "./pages/Takeout";
 import Phone from "./pages/Phone";
-// import PushNotification from "./src/services/PushNotification";
+import PushNotification from "./src/services/PushNotification";
 import Times from "./pages/Times";
 
 function ProfileStack() {
@@ -114,6 +114,7 @@ export default class App extends React.Component {
 
 	componentDidMount() {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
+		PushNotification.registerForPushNotificationsAsync();
 	}
 
 	render() {
