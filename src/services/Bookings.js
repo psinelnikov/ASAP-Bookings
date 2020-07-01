@@ -41,35 +41,27 @@ export default class Bookings {
 		});
 	}
 
-	// check to see if in operating hours for example 9-5
-	static addBooking(startDate, endDate, numOfGuests) {
-		// this can be refactored later
+	static viewBookings() {
 		return new Promise((resolve, reject) => {
 			const uid = Firebase.auth().currentUser.uid;
-			// Query for all bookings, check start / end dates
+			// Query for all bookings owned by current user
 			Database.collection("bookings")
+				.where("owner", "==", uid)
 				.get()
 				.then((querySnapshot) => {
-					if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
-						// There was a collision
-						reject("there was a conflict in dates");
-					} else {
-						// Add to database
-						Database.collection("bookings")
-							.add({
-								owner: uid,
-								startDate: startDate,
-								endDate: endDate,
-								guests: numOfGuests,
-								created: new Date(),
-							})
-							.then((docRef) => {
-								resolve(docRef.id);
-							})
-							.catch((err) => {
-								reject(err);
-							});
-					}
+					let bookings = [];
+					querySnapshot.forEach((doc) => {
+						const data = doc.data();
+						bookings.push({
+							id: doc.id,
+							owner: data.owner,
+							guests: data.guests,
+							startDate: data.startDate,
+							endDate: data.endDate,
+							created: data.created,
+						});
+					});
+					resolve(bookings);
 				})
 				.catch((err) => {
 					reject(err);
