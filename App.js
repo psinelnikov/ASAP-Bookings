@@ -1,41 +1,9 @@
-// import React from "react";
-
-// import Login from "./pages/Login";
-// import Home from "./pages/Home";
-// //import AuthScreen from "./pages/AuthScreen";
-
-// import { NavigationContainer } from "@react-navigation/native";
-// import { Navigator, Screen } from "@react-navigation/stack";
-
-// // const AppNavigator = createStackNavigator({
-// // 	Home: HomeScreen,
-// // 	Settings: SettingsScreen,
-// // });
-
-// // const RootNavigator = createSwitchNavigator({
-// // 	Login: LoginScreen,
-// // 	App: AppNavigator,
-// // });
-
-// export default function App({ navigation }) {
-// 	return (
-// 		<NavigationContainer>
-// 			<Navigator>
-// 				{isLoggedIn ? (
-// 					<>
-// 						<Screen name="Home" component={Home} />
-// 					</>
-// 				) : (
-// 					<Screen name="SignIn" component={Login} />
-// 				)}
-// 			</Navigator>
-// 		</NavigationContainer>
-// 	);
-// }
-
+import 'react-native-gesture-handler';
 import * as React from "react";
 
 import Home from "./pages/Home";
+import ViewBookings from "./pages/ViewBookings";
+import AddBookings from "./pages/AddBookings";
 import { userContext } from "./src/userContext";
 
 import { NavigationContainer } from "@react-navigation/native";
@@ -61,6 +29,10 @@ export default class App extends React.Component {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 	}
 
+	refreshBookings = () => {
+		console.log("k")
+	}
+	
 	render() {
 		const { route } = this.props;
 		return (
@@ -71,8 +43,18 @@ export default class App extends React.Component {
 						<Navigator>
 							<Screen
 								name="Home"
-								options={{ title: "Home" }}
 								component={Home}
+								options={{ title: "Home" }}
+							/>
+							<Screen
+								name="ViewBookings"
+								component={ViewBookings}
+								options={{ title: "Bookings" }}
+							/>
+							<Screen
+								name="AddBookings"
+								component={AddBookings}
+								options={{ title: "Add a Booking" }}
 							/>
 							<Screen
 								name="Booking"

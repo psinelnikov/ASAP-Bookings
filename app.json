@@ -21,7 +21,7 @@
 			"favicon": "./assets/favicon.png"
 		},
 		"android": {
-			"package": "com.asap.asapbookings",
+			"package": "ca.asap.bookings",
 			"googleServicesFile": "./google-services.json"
 		}
 	}

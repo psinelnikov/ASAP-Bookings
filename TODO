@@ -1,0 +1,12 @@
+NOTES:
+  ☐ Implement food take-out option
+  ☐ Update UI to reflect document
+  ☐ Implement calendar for available slots
+  ☐ Table-hold-time
+  ☐ Reminders / push notifications
+  ☐ 
+  ☐ 
+  ☐ 
+  ☐ 
+  ☐ Pass parameters routes - https://reactnavigation.org/docs/params
+  ✔ Clear Warnings - https://github.com/firebase/firebase-js-sdk/issues/97 @done(20-06-29 21:04)
