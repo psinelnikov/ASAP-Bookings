@@ -17,19 +17,19 @@ export default function Home({ navigation }) {
 
 	const user = Firebase.auth().currentUser;
 
+	const avatar = user && user.photoURL && (
+		<Image
+			style={{ width: 48, height: 48, marginBottom: 10 }}
+			source={{ uri: userData.photoURL }}
+		/>
+	);
+
 	return (
 		<View style={styles.container}>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Booking", { name: "Jane" })}
-			>
-				<Text>Make a Booking</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Takeout")}
-			>
-				<Text>Take Out Order</Text>
+			{avatar}
+			<Text style={styles.header}>Welcome {user && user.displayName}!</Text>
+			<TouchableOpacity style={styles.button} onPress={AuthService.logout}>
+				<Text>Logout</Text>
 			</TouchableOpacity>
 		</View>
 	);

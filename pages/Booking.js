@@ -11,58 +11,24 @@ import AuthService from "../src/services/Auth";
 
 export default Booking = ({ navigation }) => {
 	const [date, setDate] = useState(new Date());
-	const [bookings, setBookings] = useState([]);
-	const [show, setShow] = useState(false);
+	//const [show, setShow] = useState(false);
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
 	);
 	const [people, setPeople] = useState(1);
 
-	useEffect(() => {
-		var startDate = new Date();
-		let endDate = new Date().setHours(30);
-		let minutes = (endDate - startDate) / 1000 / 60; // 1 minute interval
-		console.log(minutes);
-		let interval = 20; // minutes
-		let id = 0;
+	// const setTime = (event, selectedTime) => {
+	// 	if (selectedTime) {
+	// 		console.log(selectedTime.toLocaleString());
+	// 		setDate(selectedTime);
+	// 	}
 
-		for (i = minutes; i > 0; i -= interval) {
-			endDate = moment(startDate).add(interval, "m").toDate();
-			bookings.push({
-				key: ++id,
-				owner: "me",
-				startDate: startDate,
-				endDate: endDate,
-			});
+	// 	setShow(false);
+	// };
 
-			startDate = endDate;
-		}
-
-		console.log(bookings);
-	}, []);
-
-	const setTime = (event, selectedTime) => {
-		console.log(selectedTime.toLocaleString());
-		setShow(false);
-	};
-
-	const showTimepicker = () => {
-		setShow(true);
-	};
-
-	const keyExtractor = (item, index) => index.toString();
-
-	const renderItem = ({ item }) => (
-		<ListItem
-			title={item.owner}
-			subtitle={item.startDate.toLocaleString()}
-			badge={{
-				value: 3,
-				textStyle: { color: "orange" },
-				containerStyle: { marginTop: -20 },
-			}}
-		/>
-	);
+	// const showTimepicker = () => {
+	// 	setShow(true);
+	// };
 
 	return (
 		<View style={styles.container}>
@@ -101,18 +67,19 @@ export default Booking = ({ navigation }) => {
 					<Picker.Item label="8+" value="8" />
 				</Picker>
 			</View>
-			<View style={{ flex: 2, flexDirection: "column" }}>
-				<Button onPress={showTimepicker} title="Show time picker!" />
-				{show && (
-					<DateTimePicker
-						mode="time"
-						value={date}
-						onChange={setTime}
-						minuteInterval={30}
-					/>
-				)}
+			<View style={{}}>
+				{/* <Button onPress={showTimepicker} title="Book Time" />
+					{show && (
+						<DateTimePicker
+							mode="time"
+							value={date}
+							onChange={setTime}
+							minuteInterval={10}
+							display="spinner"
+						/>
+					)} */}
 				<Button
-					title="Show all times"
+					title="View Available Times"
 					onPress={() => navigation.navigate("Times")}
 				/>
 			</View>
@@ -126,5 +93,9 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	fixToText: {
+		flexDirection: "row",
+		justifyContent: "space-between",
 	},
 });
