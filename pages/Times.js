@@ -30,6 +30,7 @@ export default Booking = ({ route }) => {
 		let minutes = difference / 1000 / 60; // 1 minute interval
 		let interval = people > 2 ? 60 : 30; // minutes
 		let id = 0;
+		let tempBooks = [];
 
 		// Calculates the frontend values for booking times
 		for (let i = minutes; i > 0; i -= interval) {
@@ -44,6 +45,7 @@ export default Booking = ({ route }) => {
 
 			startDate = endDate;
 		}
+		setBookings(tempBooks);
 
 		//}
 	}, []);
@@ -74,19 +76,17 @@ export default Booking = ({ route }) => {
 
 	return (
 		<View style={styles.container}>
-			<View style={{ flex: 1, flexDirection: "row" }}>
-				{bookings.length ? (
-					<FlatList
-						keyExtractor={keyExtractor}
-						data={bookings}
-						renderItem={renderItem}
-					/>
-				) : (
-					<Text style={{ alignSelf: "center" }}>
-						Sorry, there are no available bookings for this day
-					</Text>
-				)}
-			</View>
+			{bookings.length > 0 ? (
+				<FlatList
+					keyExtractor={keyExtractor}
+					data={bookings}
+					renderItem={renderItem}
+				/>
+			) : (
+				<Text style={{ alignSelf: "center" }}>
+					Sorry, there are no available bookings for this day
+				</Text>
+			)}
 		</View>
 	);
 };
@@ -97,5 +97,6 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+		flexDirection: "row",
 	},
 });
