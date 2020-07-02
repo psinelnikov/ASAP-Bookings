@@ -15,6 +15,10 @@ export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
 	const [modalVisible, setModalVisible] = useState(false);
 
+	// useEffect(() => {
+	// 	console.log(route.params.id);
+	// }, [route.params])
+
 	return (
 		<View style={styles.container}>
 			<View
@@ -73,6 +77,7 @@ export default function BookingDetails({ navigation, route }) {
 				>
 					<Text>Reschedule</Text>
 				</TouchableOpacity>
+
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() => {

@@ -1,12 +1,7 @@
 TODO:
-  ☐ pages/Booking.js : make a list instead
-  ☐ pages/Home.js    : use Async storage instead to keep track of phoneNo
-  ☐ If it detects that there is a blocked time, it will not display the corresponding time slots
-  ☐ 
-  ☐ 
-  ☐ 
   ☐ ViewBookings doesn't update right away after making one
   ☐ Implement food take-out option
+  ✔ If it detects that there is a blocked time, it will not display the corresponding time slots @done(20-07-02 03:28)
   ✔ Implement calendar for available slots @done(20-07-02 02:50)
   ✔ Prompt user to enter phone number if they don't have one @done(20-07-02 02:50)
   ✔ Reminders / push notifications @done(20-07-02 02:50)
@@ -15,3 +10,7 @@ TODO:
   ✔ Prompt user for phone no. if they try to make a booking @done(20-07-01 03:28)
   ✔ Pass parameters routes - https://reactnavigation.org/docs/params @done(20-06-30 20:47)
   ✔ Clear Warnings - https://github.com/firebase/firebase-js-sdk/issues/97 @done(20-06-29 21:04)
+
+FUTURE FEATURES:
+  ☐ pages/Booking.js : make a list instead
+  ☐ pages/Home.js    : use Async storage instead to keep track of phoneNo

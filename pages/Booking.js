@@ -17,7 +17,7 @@ import AuthService from "../src/services/Auth";
 
 export default function Booking({ navigation, route }) {
 	const { id, startDate, guests } = route.params;
-	const [date, setDate] = useState(startDate || new Date());
+	const [date, setDate] = useState(moment(startDate) || new Date());
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
 	);
