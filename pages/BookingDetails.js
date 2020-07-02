@@ -11,28 +11,72 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
 export default function BookingDetails({ navigation, route }) {
-	const { id } = route.params;
+	const { id, startDate, endDate, guests } = route.params;
 
 	return (
 		<View style={styles.container}>
-			<Text>Date</Text>
-			<Text>Time</Text>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Booking", { id })}
-			>
-				<Text>Rebook</Text>
-			</TouchableOpacity>
-			<TouchableOpacity
-				style={styles.button}
-				onPress={async () => {
-					await Bookings.cancelBooking(id);
-					navigation.navigate("ViewBookings");
+			<View
+				style={{
+					flex: 1,
+					flexDirection: "row",
+					alignItems: "center",
 				}}
 			>
-				<Text>Cancel</Text>
-			</TouchableOpacity>
-			<Text>Guests</Text>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "column",
+						alignItems: "flex-end",
+						margin: 10,
+					}}
+				>
+					<Text>Time of Booking:</Text>
+					<Text>Date of Booking:</Text>
+					<Text>Number of People:</Text>
+				</View>
+
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "column",
+						alignItems: "flex-start",
+						margin: 10,
+					}}
+				>
+					<Text style={{ fontWeight: "bold" }}>
+						{moment(startDate.toDate()).format("dddd, LL")}
+					</Text>
+					<Text style={{ fontWeight: "bold" }}>
+						{moment(startDate.toDate()).format("LT")}
+					</Text>
+					<Text style={{ fontWeight: "bold" }}>{guests}</Text>
+				</View>
+			</View>
+
+			<View
+				style={{
+					flexDirection: "row",
+					justifyContent: "space-around",
+				}}
+			>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={() =>
+						navigation.navigate("Booking", { id, startDate, guests })
+					}
+				>
+					<Text>Rebook</Text>
+				</TouchableOpacity>
+				<TouchableOpacity
+					style={styles.button}
+					onPress={async () => {
+						await Bookings.cancelBooking(id);
+						navigation.navigate("ViewBookings");
+					}}
+				>
+					<Text>Cancel Booking</Text>
+				</TouchableOpacity>
+			</View>
 		</View>
 	);
 }
@@ -41,8 +85,6 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
 	},
 	header: {
 		marginBottom: 20,
@@ -50,7 +92,8 @@ const styles = StyleSheet.create({
 	button: {
 		alignItems: "center",
 		backgroundColor: "#DDDDDD",
+		width: 120,
 		padding: 10,
-		marginBottom: 20,
+		marginBottom: 50,
 	},
 });

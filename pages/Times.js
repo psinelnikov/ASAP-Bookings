@@ -10,44 +10,44 @@ import { Picker } from "@react-native-community/picker";
 import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
-export default Booking = ({ route }) => {
-	const { date, people, id } = route.params;
+export default Booking = ({ route, navigation }) => {
+	const { date, people, id, today } = route.params;
 	const [blockedTime, setBlockedTime] = useState([]);
 	const [bookings, setBookings] = useState([]);
 
-	// bookTime = () => {};
-
 	useEffect(() => {
-		let startDate;
-		if (moment(date).hour() < 8) {
-			startDate = moment(date).set({ hour: 8, minute: 0, second: 0 });
-		} else {
-			startDate = moment(date).ceil(20, "minutes");
+		if (moment(date).isSameOrAfter(today, "day")) {
+			let startDate;
+			if (moment(date).hour() < 8) {
+				startDate = moment(date).set({ hour: 8, minute: 0, second: 0 });
+			} else {
+				startDate = moment(date).ceil(20, "minutes");
+			}
+
+			let endDate = moment(startDate).hours(16).minutes(59);
+			let difference = moment(endDate).diff(startDate);
+			let minutes = difference / 1000 / 60; // 1 minute interval
+			let interval = people > 2 ? 60 : 30; // minutes
+			let id = 0;
+			let tempBooks = [];
+
+			// Calculates the frontend values for booking times
+			for (let i = minutes; i > 0; i -= interval) {
+				// if () {
+				endDate = moment(startDate).add(interval, "m").toDate();
+				tempBooks.push({
+					key: ++id,
+					guests: people,
+					startDate: startDate,
+					endDate: endDate,
+				});
+
+				startDate = endDate;
+			}
+			setBookings(tempBooks);
+
+			//}
 		}
-
-		let endDate = moment(startDate).hours(16).minutes(59);
-		let difference = moment(endDate).diff(startDate);
-		let minutes = difference / 1000 / 60; // 1 minute interval
-		let interval = people > 2 ? 60 : 30; // minutes
-		let id = 0;
-		let tempBooks = [];
-
-		// Calculates the frontend values for booking times
-		for (let i = minutes; i > 0; i -= interval) {
-			// if () {
-			endDate = moment(startDate).add(interval, "m").toDate();
-			tempBooks.push({
-				key: ++id,
-				guests: people,
-				startDate: startDate,
-				endDate: endDate,
-			});
-
-			startDate = endDate;
-		}
-		setBookings(tempBooks);
-
-		//}
 	}, []);
 
 	const keyExtractor = (item, index) => index.toString();
@@ -66,6 +66,7 @@ export default Booking = ({ route }) => {
 					});
 					if (updated) {
 						console.log(`Successfully updated ID: ${id}!`);
+						navigation.navigate("BookingDetails", { id });
 						return;
 					}
 					console.log("Rebook Unsuccessful!");

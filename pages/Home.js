@@ -1,43 +1,29 @@
 import React, { useEffect } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	Button,
-	Image,
-	TouchableOpacity,
-} from "react-native";
-
-import { Firebase, Database } from "../src/integrations/firebase";
-import AuthService from "../src/services/Auth";
-import { userContext } from "../src/userContext";
+import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
+import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 export default function Home({ navigation }) {
-	const userData = userContext._currentValue;
-
-	const user = Firebase.auth().currentUser;
-	//console.log(user);
-
-	const avatar = user && user.photoURL && (
-		<Image
-			style={{ width: 48, height: 48, marginBottom: 10 }}
-			source={{ uri: userData.photoURL }}
-		/>
-	);
-
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity
-				style={styles.button}
-				onPress={() => navigation.navigate("Booking", { name: "Jane" })}
+				style={{ ...styles.button, marginBottom: 2 }}
+				onPress={() =>
+					navigation.navigate("Booking", {
+						id: null,
+						startDate: null,
+						guests: null,
+					})
+				}
 			>
-				<Text>Make a Booking</Text>
+				<FontAwesome5 style={{ fontSize: 150 }} name={"chair"} solid />
+				<Text>Reservation</Text>
 			</TouchableOpacity>
 			<TouchableOpacity
 				style={styles.button}
 				onPress={() => navigation.navigate("Takeout")}
 			>
-				<Text>Take Out Order</Text>
+				<FontAwesome5 style={{ fontSize: 150 }} name={"walking"} solid />
+				<Text>Take Out</Text>
 			</TouchableOpacity>
 		</View>
 	);
@@ -47,16 +33,15 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
 	},
 	header: {
 		marginBottom: 20,
 	},
 	button: {
+		flex: 1,
 		alignItems: "center",
+		justifyContent: "space-evenly",
 		backgroundColor: "#DDDDDD",
-		padding: 10,
-		marginBottom: 20,
+		margin: 10,
 	},
 });

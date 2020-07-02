@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { ListItem } from "react-native-elements";
-import { StyleSheet, Text, View, Button, Image, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	Button,
+	Image,
+	FlatList,
+	RefreshControl,
+} from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
@@ -16,13 +24,19 @@ export default function ViewBookings({ route, navigation }) {
 
 	const keyExtractor = (item, index) => index.toString();
 
+	const onRefresh = React.useCallback(async () => {
+		setRefreshing(true);
+		setBookings(await Bookings.viewBookings());
+		setRefreshing(false);
+	}, [refreshing]);
+
 	useEffect(() => {
 		const fetchBookings = async () => {
 			const data = await Bookings.viewBookings();
 			setBookings(data);
 		};
 		fetchBookings();
-	}, [bookings]);
+	}, []);
 
 	const renderItem = ({ item }) => (
 		<ListItem
@@ -32,7 +46,14 @@ export default function ViewBookings({ route, navigation }) {
 			subtitle={
 				item.guests > 1 ? `${item.guests} People` : `${item.guests} Person`
 			}
-			onPress={() => navigation.navigate("BookingDetails", { id: item.id })}
+			onPress={() =>
+				navigation.navigate("BookingDetails", {
+					id: item.id,
+					startDate: item.startDate,
+					endDate: item.endDate,
+					guests: item.guests,
+				})
+			}
 			bottomDivider
 			chevron
 		/>
@@ -41,6 +62,9 @@ export default function ViewBookings({ route, navigation }) {
 	return (
 		<View style={styles.container}>
 			<FlatList
+				refreshControl={
+					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
+				}
 				keyExtractor={keyExtractor}
 				data={bookings}
 				renderItem={renderItem}

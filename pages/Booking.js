@@ -14,27 +14,15 @@ import moment from "moment";
 
 import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
-import PhoneService from "../src/services/Phone";
 
 export default function Booking({ navigation, route }) {
-	const { id } = route.params;
-	const [date, setDate] = useState(new Date());
+	const { id, startDate, guests } = route.params;
+	const [date, setDate] = useState(startDate || new Date());
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
 	);
-	const [people, setPeople] = useState(1);
+	const [people, setPeople] = useState(guests || 1);
 	const today = new Date();
-
-	useEffect(() => {
-		// redirect to phone screen if no phone # is saved
-		const hasPhoneNo = PhoneService.userHasPhoneNo()
-			.then((result) => {
-				if (!result) navigation.navigate("Phone");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}, []);
 
 	return (
 		<View style={styles.container}>
@@ -79,13 +67,15 @@ export default function Booking({ navigation, route }) {
 					<Picker.Item label="3 People" value={3} />
 					<Picker.Item label="4 People" value={4} />
 					<Picker.Item label="5 People" value={5} />
-					<Picker.Item label="6+ People" value={6} />
+					<Picker.Item label="6 People" value={6} />
 				</Picker>
 			</View>
 			<View style={{ flex: 1 }}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => navigation.navigate("Times", { date, people, id })}
+					onPress={() =>
+						navigation.navigate("Times", { date, people, id, today })
+					}
 				>
 					<Text>View Available Times</Text>
 				</TouchableOpacity>
