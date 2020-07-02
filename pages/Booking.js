@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Button, Image, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	Button,
+	Image,
+	FlatList,
+} from "react-native";
 import { Picker } from "@react-native-community/picker";
 import { CalendarList } from "react-native-calendars";
 import moment from "moment";
@@ -8,7 +16,8 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 import PhoneService from "../src/services/Phone";
 
-export default function Booking({ navigation }) {
+export default function Booking({ navigation, route }) {
+	const { id } = route.params;
 	const [date, setDate] = useState(new Date());
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
@@ -19,12 +28,12 @@ export default function Booking({ navigation }) {
 	useEffect(() => {
 		// redirect to phone screen if no phone # is saved
 		const hasPhoneNo = PhoneService.userHasPhoneNo()
-		.then(result => {
-			if (!result) navigation.navigate("Phone");
-		})
-		.catch(err => {
-			console.log(err);
-		});
+			.then((result) => {
+				if (!result) navigation.navigate("Phone");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	return (
@@ -41,7 +50,9 @@ export default function Booking({ navigation }) {
 					}}
 					onDayPress={(date) => {
 						if (moment(today).date() !== date.day) {
-							setDate(new Date(date.year, date.month, date.day, 0, 0, 0, 0));
+							setDate(
+								new Date(date.year, date.month - 1, date.day, 0, 0, 0, 0)
+							);
 						} else {
 							setDate(today);
 						}
@@ -74,14 +85,14 @@ export default function Booking({ navigation }) {
 			<View style={{ flex: 1 }}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => navigation.navigate("Times", { date, people })}
+					onPress={() => navigation.navigate("Times", { date, people, id })}
 				>
 					<Text>View Available Times</Text>
 				</TouchableOpacity>
 			</View>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {

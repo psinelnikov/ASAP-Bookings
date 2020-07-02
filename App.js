@@ -20,6 +20,7 @@ const Tab = createBottomTabNavigator();
 import AuthService from "./src/services/Auth";
 import Login from "./pages/Login";
 import Booking from "./pages/Booking";
+import BookingDetails from "./pages/BookingDetails";
 import Takeout from "./pages/Takeout";
 import Phone from "./pages/Phone";
 import PushNotification from "./src/services/PushNotification";
@@ -38,6 +39,10 @@ console.warn = (message) => {
 // Also fix this stupid yellow box
 YellowBox.ignoreWarnings([
   'Non-serializable values were found in the navigation state',
+]);
+
+YellowBox.ignoreWarnings([
+	"Non-serializable values were found in the navigation state",
 ]);
 
 function ProfileStack() {
@@ -114,6 +119,11 @@ function ViewBookingsStack() {
 				name="ViewBookings"
 				component={ViewBookings}
 				options={{ title: "View Bookings" }}
+			/>
+			<Screen
+				name="BookingDetails"
+				component={BookingDetails}
+				options={{ title: "Booking Details" }}
 			/>
 		</Stack.Navigator>
 	);

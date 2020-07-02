@@ -11,7 +11,7 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route }) => {
-	const { date, people } = route.params;
+	const { date, people, id } = route.params;
 	const [blockedTime, setBlockedTime] = useState([]);
 	const [bookings, setBookings] = useState([]);
 
@@ -58,16 +58,29 @@ export default Booking = ({ route }) => {
 				item.endDate
 			).format("h:mm")}`}
 			onPress={async () => {
-				const id = await Bookings.addBooking(
-					item.startDate,
-					item.endDate,
-					item.guests
-				);
 				if (id) {
-					console.log(`Booking Successful for ID: ${id}!`);
-					return;
+					const updated = await Bookings.updateBooking(id, {
+						startDate: item.startDate,
+						endDate: item.endDate,
+						guests: item.guests,
+					});
+					if (updated) {
+						console.log(`Successfully updated ID: ${id}!`);
+						return;
+					}
+					console.log("Rebook Unsuccessful!");
+				} else {
+					const created = await Bookings.addBooking(
+						item.startDate,
+						item.endDate,
+						item.guests
+					);
+					if (created) {
+						console.log(`Booking Successful for ID: ${created}!`);
+						return;
+					}
+					console.log("Booking Unsuccessful!");
 				}
-				console.log("Booking Unsuccessful!");
 			}}
 			bottomDivider
 			chevron

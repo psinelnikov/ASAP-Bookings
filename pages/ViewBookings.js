@@ -11,6 +11,7 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
 export default function ViewBookings({ route, navigation }) {
+	const [refreshing, setRefreshing] = React.useState(false);
 	const [bookings, setBookings] = useState([]);
 
 	const keyExtractor = (item, index) => index.toString();
@@ -21,18 +22,17 @@ export default function ViewBookings({ route, navigation }) {
 			setBookings(data);
 		};
 		fetchBookings();
-	}, []);
+	}, [bookings]);
 
 	const renderItem = ({ item }) => (
 		<ListItem
-			title={`${moment(item.startDate.toDate()).format("h:mm")} - ${moment(
-				item.endDate.toDate()
-			).format("h:mm")}`}
-			onPress={async () => {
-				//console.log(item.id);
-				await Bookings.cancelBooking(item.id);
-				setBookings(await Bookings.viewBookings());
-			}}
+			title={`${moment(item.startDate.toDate()).calendar()} - ${moment(
+				item.startDate.toDate()
+			).fromNow()}`}
+			subtitle={
+				item.guests > 1 ? `${item.guests} People` : `${item.guests} Person`
+			}
+			onPress={() => navigation.navigate("BookingDetails", { id: item.id })}
 			bottomDivider
 			chevron
 		/>
@@ -40,13 +40,11 @@ export default function ViewBookings({ route, navigation }) {
 
 	return (
 		<View style={styles.container}>
-			<View style={{ flex: 1, flexDirection: "row" }}>
-				<FlatList
-					keyExtractor={keyExtractor}
-					data={bookings}
-					renderItem={renderItem}
-				/>
-			</View>
+			<FlatList
+				keyExtractor={keyExtractor}
+				data={bookings}
+				renderItem={renderItem}
+			/>
 		</View>
 	);
 }
@@ -55,7 +53,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		alignItems: "center",
+		alignItems: "flex-start",
 		justifyContent: "center",
+		flexDirection: "row",
 	},
 });
