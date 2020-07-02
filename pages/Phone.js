@@ -1,5 +1,12 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, Button, Image, TextInput } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	Image,
+	TextInput,
+} from "react-native";
 
 import PhoneService from "../src/services/Phone";
 
@@ -10,7 +17,10 @@ export default Phone = ({ navigation }) => {
 		if (!phoneNo) return;
 		PhoneService.savePhoneNo(phoneNo)
 			.then(() => {
-				navigation.navigate("Booking");
+				navigation.reset({
+					index: 1,
+					routes: [{ name: "AddBookingStack" }],
+				});
 			})
 			.catch((err) => {
 				console.log(err);
@@ -21,11 +31,20 @@ export default Phone = ({ navigation }) => {
 		<View style={styles.container}>
 			<Text>Please enter your Phone Number</Text>
 			<TextInput
-				style={{ height: 40, borderColor: "gray", width: 100, borderWidth: 1 }}
+				style={{
+					height: 40,
+					borderColor: "gray",
+					width: 200,
+					borderWidth: 1,
+					marginTop: 20,
+				}}
+				textContentType="telephoneNumber"
 				onChangeText={(text) => setPhoneNo(text)}
 				value={phoneNo}
 			/>
-			<Button title="Save" onPress={savePhoneNo} />
+			<TouchableOpacity style={styles.button} onPress={() => savePhoneNo}>
+				<Text>Save</Text>
+			</TouchableOpacity>
 		</View>
 	);
 };
@@ -36,5 +55,12 @@ const styles = StyleSheet.create({
 		backgroundColor: "#fff",
 		alignItems: "center",
 		justifyContent: "center",
+	},
+	button: {
+		alignItems: "center",
+		backgroundColor: "#DDDDDD",
+		width: 120,
+		padding: 10,
+		marginTop: 30,
 	},
 });

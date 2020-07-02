@@ -154,7 +154,7 @@ export default class App extends React.Component {
 								name="ProfileStack"
 								component={ProfileStack}
 								options={{
-									tabBarLabel: "ProfileStack",
+									tabBarLabel: "Profile",
 									tabBarIcon: ({ color, size }) => (
 										<MaterialCommunityIcons
 											name="account"

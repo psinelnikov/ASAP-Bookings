@@ -4,9 +4,36 @@ import { StyleSheet, Text, View, Button, Image } from "react-native";
 export default Home = () => {
 	return (
 		<View style={styles.container}>
-			<Text>Take Out!</Text>
-			<Text>Website</Text>
-			<Text>Phone</Text>
+			<View
+				style={{
+					flex: 1,
+					flexDirection: "row",
+					alignItems: "center",
+				}}
+			>
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "column",
+						alignItems: "center",
+						margin: 0,
+					}}
+				>
+					<Text>Website:</Text>
+					<Text>Phone:</Text>
+				</View>
+
+				<View
+					style={{
+						flex: 1,
+						flexDirection: "column",
+						alignItems: "flex-start",
+					}}
+				>
+					<Text style={{ fontWeight: "bold" }}>www.asapbookings.com</Text>
+					<Text style={{ fontWeight: "bold" }}>647-555-5555</Text>
+				</View>
+			</View>
 		</View>
 	);
 };
@@ -15,7 +42,8 @@ const styles = StyleSheet.create({
 	container: {
 		flex: 1,
 		backgroundColor: "#fff",
-		alignItems: "center",
-		justifyContent: "center",
+	},
+	header: {
+		marginBottom: 20,
 	},
 });

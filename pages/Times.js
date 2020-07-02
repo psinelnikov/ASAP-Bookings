@@ -110,8 +110,12 @@ export default Booking = ({ route, navigation }) => {
 			<View>
 				<CustomModal
 					visible={modalVisible}
-					title="Hello!"
-					message="Do you want to create a booking?"
+					title={`${moment(localStartDate).format("MMMM Do")}, ${moment(
+						localStartDate
+					).format("h:mm A")} - ${moment(localEndDate).format("h:mm A")}`}
+					message={`Do you wish to set a booking at this time for ${localGuests} ${
+						localGuests > 1 ? "People?" : "Person?"
+					}`}
 					onPress={async () => {
 						if (id) {
 							const updated = await Bookings.updateBooking(id, {

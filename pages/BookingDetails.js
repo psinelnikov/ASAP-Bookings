@@ -19,7 +19,7 @@ import AuthService from "../src/services/Auth";
 
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
-	const [modalVisible, setModalVisible] = useState(false);
+	const [modalVisible, setModalVisible] = useState(true);
 
 	const showToast = (msg) => {
 		ToastAndroid.show(msg, ToastAndroid.SHORT);
@@ -92,8 +92,12 @@ export default function BookingDetails({ navigation, route }) {
 				>
 					<CustomModal
 						visible={modalVisible}
-						title="Warning!"
-						message="Do you want to cancel your booking?"
+						title={`${moment(startDate).format("MMMM Do")}, ${moment(
+							startDate
+						).format("h:mm A")} - ${moment(endDate).format("h:mm A")}`}
+						message={`Do you wish to delete the booking at this time for ${guests} ${
+							guests > 1 ? "People?" : "Person?"
+						}`}
 						onPress={async () => {
 							await Bookings.cancelBooking(id);
 							showToast("Booking Successfully Cancelled!");
