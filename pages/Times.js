@@ -36,7 +36,7 @@ export default Booking = ({ route }) => {
 		for (let i = minutes; i > 0; i -= interval) {
 			// if () {
 			endDate = moment(startDate).add(interval, "m").toDate();
-			bookings.push({
+			tempBooks.push({
 				key: ++id,
 				guests: people,
 				startDate: startDate,
