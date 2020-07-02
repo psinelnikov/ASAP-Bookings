@@ -17,8 +17,8 @@ export default class PushNotification {
   //   console.log(notification);
   // });
 
-  static sendPushNotification = async (timestamp) => {
-    Notifications.scheduleNotificationAsync({
+  static scheduleBookingNotification = async (timestamp) => {
+    const identifier = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Booking Reminder",
         body: 'You have a booking for a dine-in in 30 minutes!',
@@ -28,6 +28,12 @@ export default class PushNotification {
       //   seconds: 5,
       // },
     });
+    return identifier;
+  }
+
+  static cancelBookingNotification = async (id) => {
+    console.log("cancelled schedule notification");
+    await Notifications.cancelScheduledNotificationAsync(id);
   }
 
   static registerForPushNotificationsAsync = async () => {

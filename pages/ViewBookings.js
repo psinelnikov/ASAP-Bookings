@@ -38,7 +38,16 @@ export default function ViewBookings({ route, navigation }) {
 		fetchBookings();
 	}, []);
 
-	const renderItem = ({ item }) => (
+	function viewDetails(item) {
+		navigation.navigate("BookingDetails", {
+			id: item.id,
+			startDate: item.startDate.seconds,
+			endDate: item.endDate.seconds,
+			guests: item.guests,
+		})
+	}
+
+	const renderItem = ({ item }) => (		
 		<ListItem
 			title={`${moment(item.startDate.toDate()).calendar()} - ${moment(
 				item.startDate.toDate()
@@ -46,14 +55,7 @@ export default function ViewBookings({ route, navigation }) {
 			subtitle={
 				item.guests > 1 ? `${item.guests} People` : `${item.guests} Person`
 			}
-			onPress={() =>
-				navigation.navigate("BookingDetails", {
-					id: item.id,
-					startDate: item.startDate,
-					endDate: item.endDate,
-					guests: item.guests,
-				})
-			}
+			onPress={() => viewDetails(item)}
 			bottomDivider
 			chevron
 		/>

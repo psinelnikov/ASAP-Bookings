@@ -1,6 +1,8 @@
 import { Firebase, Database } from "../integrations/firebase";
 import moment from "moment";
 
+import PushNotification from "./PushNotification";
+
 export default class Bookings {
 	// check to see if in operating hours for example 9-5
 	static addBooking(startDate, endDate, numOfGuests) {
@@ -15,24 +17,26 @@ export default class Bookings {
 						// There was a collision
 						reject("there was a conflict in dates");
 					} else {
-						// Add to database
-						Database.collection("bookings")
+						const notificationTime = startDate - (30 * 60000); // 30 minutes before start
+						PushNotification.scheduleBookingNotification(notificationTime)
+						.then(notificationId => {
+							// Add to database
+							Database.collection("bookings")
 							.add({
 								owner: uid,
 								startDate: startDate,
 								endDate: endDate,
 								guests: numOfGuests,
 								created: new Date(),
+								notification: notificationId,
 							})
 							.then((docRef) => {
-								// return reference to document
-								//console.log("bookings:" + docRef.id);
-								//return docRef.id;
 								resolve(docRef.id);
 							})
 							.catch((err) => {
 								reject(err);
 							});
+						})
 					}
 				})
 				.catch((err) => {
@@ -71,13 +75,15 @@ export default class Bookings {
 
 	static cancelBooking(id) {
 		return new Promise((resolve, reject) => {
-			Database.collection("bookings")
-			.doc(id)
-			.delete()
-			.then(() => {
-				resolve("Done");
-			})
-			.catch((err) => {
+			const bookingRef = Database.collection("bookings").doc(id);
+			bookingRef.get().then(doc => {
+				const notificationId = doc.data().notification;
+				bookingRef.delete().then(() => {
+					PushNotification.cancelBookingNotification().then(() => {
+						resolve("Done");
+					})
+				});
+			}).catch(err => {
 				console.log(err);
 				reject(err);
 			});

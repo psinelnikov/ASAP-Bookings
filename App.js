@@ -4,7 +4,7 @@ import * as React from "react";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import ViewBookings from "./pages/ViewBookings";
-import AddBookings from "./pages/AddBookings";
+// import AddBookings from "./pages/AddBookings";
 import { userContext } from "./src/userContext";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -37,9 +37,9 @@ console.warn = (message) => {
 	}
 };
 // Also fix this stupid yellow box
-YellowBox.ignoreWarnings([
-  'Non-serializable values were found in the navigation state',
-]);
+// YellowBox.ignoreWarnings([
+//   'Non-serializable values were found in the navigation state',
+// ]);
 
 YellowBox.ignoreWarnings([
 	"Non-serializable values were found in the navigation state",
@@ -75,11 +75,11 @@ function AddBookingsStack() {
 			}}
 		>
 			<Screen name="Home" component={Home} options={{ title: "Home" }} />
-			<Screen
+			{/* <Screen
 				name="AddBookings"
 				component={AddBookings}
 				options={{ title: "Add a Booking" }}
-			/>
+			/> */}
 			<Screen
 				name="Booking"
 				options={{ title: "Booking" }}

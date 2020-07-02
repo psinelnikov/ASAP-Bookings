@@ -2,7 +2,7 @@ import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity  } from "react-native";
 
 import Bookings from "../src/services/Bookings";
-import PushNotification from "../src/services/PushNotification";
+// import PushNotification from "../src/services/PushNotification";
 
 export default function AddBookings({ navigation }) {
 
@@ -13,7 +13,7 @@ export default function AddBookings({ navigation }) {
       const endDate =  new Date(startDate.getTime() + 30 * 60000);
       const guestCount = parseInt(Math.random() * 9 + 1);
       const id = await Bookings.addBooking(startDate, endDate, guestCount);
-      PushNotification.sendPushNotification(new Date().getTime() + 1 * 60000);
+      // PushNotification.sendPushNotification(new Date().getTime() + 1 * 60000);
       //console.log("addbooking:" + id);
       // navigate to viewbookings, passing an arg in 2nd
       navigation.navigate("ViewBookings", { startDate: startDate.getTime() / 1000, 

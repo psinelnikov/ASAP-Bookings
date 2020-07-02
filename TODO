@@ -9,7 +9,7 @@ NOTES:
 TODO:
   ☐ pages/Booking.js : make a list instead
   ☐ pages/Home.js    : use Async storage instead to keep track of phoneNo
-  ☐ 
+  ☐ ViewBookings doesn't update right away after making one
   ☐ 
   ☐ 
   ✔ Implement the update - Start Date, End Date, and Guests @done(20-07-01 20:18)

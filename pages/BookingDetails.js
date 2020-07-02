@@ -44,10 +44,10 @@ export default function BookingDetails({ navigation, route }) {
 					}}
 				>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment(startDate.toDate()).format("dddd, LL")}
+						{moment.unix(startDate).format("dddd, LL")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment(startDate.toDate()).format("LT")}
+						{moment.unix(startDate).format("LT")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>{guests}</Text>
 				</View>
