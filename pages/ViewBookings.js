@@ -39,11 +39,11 @@ export default function ViewBookings({ route, navigation }) {
 	}, []);
 
 	useEffect(() => {
-		if (route.params?.id) {
+		if (route.params) {
 			Bookings.viewBookings()
 			.then(data => setBookings(data));
 		}
-	}, [route.params?.id]);
+	}, [route.params]);
 
 	function viewDetails(item) {
 		navigation.navigate("BookingDetails", {

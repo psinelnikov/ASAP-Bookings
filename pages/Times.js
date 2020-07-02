@@ -110,13 +110,13 @@ export default Booking = ({ route, navigation }) => {
 										startDate: startDate,
 										guests: localGuests,
 
-										screen: "BookingDetails",
-										params: {
-											id: id,
-											endDate: endDate,
-											startDate: startDate,
-											guests: localGuests,
-										},
+										// screen: "BookingDetails",
+										// params: {
+										// 	id: id,
+										// 	endDate: endDate,
+										// 	startDate: startDate,
+										// 	guests: localGuests,
+										// },
 									},
 								});
 								return;
