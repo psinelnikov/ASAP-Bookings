@@ -1,6 +1,12 @@
 import React, { useState, useEffect } from "react";
 import { ListItem } from "react-native-elements";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	ToastAndroid,
+} from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
@@ -14,9 +20,10 @@ import AuthService from "../src/services/Auth";
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
 	const [modalVisible, setModalVisible] = useState(false);
-	// useEffect(() => {
-	// 	console.log(route.params.id);
-	// }, [route.params])
+
+	const showToast = (msg) => {
+		ToastAndroid.show(msg, ToastAndroid.SHORT);
+	};
 
 	return (
 		<View style={styles.container}>
@@ -89,6 +96,7 @@ export default function BookingDetails({ navigation, route }) {
 						message="Do you want to cancel your booking?"
 						onPress={async () => {
 							await Bookings.cancelBooking(id);
+							showToast("Booking Successfully Cancelled!");
 							navigation.navigate("ViewBookingsStack", {
 								screen: "ViewBookings",
 								params: {
