@@ -1,6 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { ListItem } from "react-native-elements";
-import { StyleSheet, Text, View, Button, Image, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	Button,
+	Image,
+	FlatList,
+	Alert,
+} from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
@@ -49,9 +57,10 @@ export default Booking = ({ route, navigation }) => {
 
 				startDate = endDate;
 			}
-			setBookings(tempBooks);
-
-			//}
+			// get blocked times, then add { blocked: true } to each booking, if blocked
+			Bookings.getBlockedTimes(tempBooks).then((blockedTimes) => {
+				setBookings(blockedTimes);
+			});
 		}
 	}, []);
 
@@ -59,6 +68,7 @@ export default Booking = ({ route, navigation }) => {
 
 	const renderItem = ({ item }) => (
 		<ListItem
+			titleStyle={item.blocked ? styles.blocked : null}
 			title={`${moment(item.startDate).format("h:mm")} - ${moment(
 				item.endDate
 			).format("h:mm")}`}
@@ -158,5 +168,9 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 		justifyContent: "center",
 		flexDirection: "row",
+	},
+	blocked: {
+		textDecorationLine: "line-through",
+		color: "rgba(0, 0, 0, 0.25)",
 	},
 });

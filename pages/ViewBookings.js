@@ -38,6 +38,15 @@ export default function ViewBookings({ route, navigation }) {
 		fetchBookings();
 	}, []);
 
+	function viewDetails(item) {
+		navigation.navigate("BookingDetails", {
+			id: item.id,
+			startDate: item.startDate.seconds,
+			endDate: item.endDate.seconds,
+			guests: item.guests,
+		});
+	}
+
 	const renderItem = ({ item }) => (
 		<ListItem
 			title={`${moment(item.startDate.toDate()).calendar()} - ${moment(

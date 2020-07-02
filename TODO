@@ -1,18 +1,16 @@
-NOTES:
-  ☐ Implement food take-out option
-  ☐ Update UI to reflect document
-  ☐ Implement calendar for available slots
-  ☐ Table-hold-time
-  ☐ Phone number
-  ☐ Reminders / push notifications
-  ☐ 
 TODO:
   ☐ pages/Booking.js : make a list instead
   ☐ pages/Home.js    : use Async storage instead to keep track of phoneNo
+  ☐ If it detects that there is a blocked time, it will not display the corresponding time slots
   ☐ 
   ☐ 
   ☐ 
-  ☐ Implement the update - Start Date, End Date, and Guests
+  ☐ ViewBookings doesn't update right away after making one
+  ☐ Implement food take-out option
+  ✔ Implement calendar for available slots @done(20-07-02 02:50)
+  ✔ Prompt user to enter phone number if they don't have one @done(20-07-02 02:50)
+  ✔ Reminders / push notifications @done(20-07-02 02:50)
+  ✔ Implement the update - Start Date, End Date, and Guests @done(20-07-01 20:18)
   ✔ scheduleNotificationAsync - https://docs.expo.io/versions/latest/sdk/notifications/#schedulenotificationasyncnotificationrequest-notificationrequestinput-promisestring @done(20-07-01 20:01)
   ✔ Prompt user for phone no. if they try to make a booking @done(20-07-01 03:28)
   ✔ Pass parameters routes - https://reactnavigation.org/docs/params @done(20-06-30 20:47)
