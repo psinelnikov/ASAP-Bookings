@@ -129,11 +129,11 @@ export default class Bookings {
 				end: data.endDate.seconds * 1000,
 			};
 			if (
-				moment(newDate.start).isBetween(
+				moment(newDate.start + 60000).isBetween(
 					moment(currDate.start),
 					moment(currDate.end)
 				) ||
-				moment(newDate.end).isBetween(
+				moment(newDate.end - 60000).isBetween(
 					moment(currDate.start),
 					moment(currDate.end)
 				)

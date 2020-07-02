@@ -38,6 +38,15 @@ export default function ViewBookings({ route, navigation }) {
 		fetchBookings();
 	}, []);
 
+	useEffect(() => {
+		if (route.params?.id) {
+			const newBookings = bookings.filter(booking => 
+				booking.id != route.params.id
+			);
+			setBookings(newBookings);
+		}
+	}, [route.params?.id]);
+
 	function viewDetails(item) {
 		navigation.navigate("BookingDetails", {
 			id: item.id,

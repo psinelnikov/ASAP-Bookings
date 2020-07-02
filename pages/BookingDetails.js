@@ -13,6 +13,10 @@ import AuthService from "../src/services/Auth";
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
 
+	// useEffect(() => {
+	// 	console.log(route.params.id);
+	// }, [route.params])
+
 	return (
 		<View style={styles.container}>
 			<View
@@ -67,11 +71,12 @@ export default function BookingDetails({ navigation, route }) {
 				>
 					<Text>Rebook</Text>
 				</TouchableOpacity>
+				
 				<TouchableOpacity
 					style={styles.button}
 					onPress={async () => {
 						await Bookings.cancelBooking(id);
-						navigation.navigate("ViewBookings");
+						navigation.navigate("ViewBookings", { id });
 					}}
 				>
 					<Text>Cancel Booking</Text>

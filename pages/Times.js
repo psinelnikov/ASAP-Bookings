@@ -68,15 +68,20 @@ export default Booking = ({ route, navigation }) => {
 					});
 					if (updated) {
 						console.log(`Successfully updated ID: ${id}!`);
-						navigation.navigate("BookingDetails", { id });
+						const { guests } = item;
+						const startDate = item.startDate.valueOf() / 1000;
+						const endDate = item.endDate.valueOf() / 1000;
+						navigation.navigate("BookingDetails", { id, startDate, endDate, guests });
 						return;
 					}
 					console.log("Rebook Unsuccessful!");
 				} else {
 					try {
+						const startDate = item.startDate.toDate()
+						const endDate = item.startDate.toDate()
 						const created = await Bookings.addBooking(
-							item.startDate,
-							item.endDate,
+							startDate,
+							endDate,
 							item.guests
 						);
 						if (created) {
