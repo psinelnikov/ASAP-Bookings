@@ -71,23 +71,31 @@ export default class Bookings {
 
 	static cancelBooking(id) {
 		return new Promise((resolve, reject) => {
-			// Query for all bookings owned by current user
 			Database.collection("bookings")
-				.doc(id)
-				.delete()
-				.then(() => {
-					resolve("Done");
-				});
-		}).catch((err) => {
-			console.log(err);
-			reject(err);
-		});
-		// check if current user owns this booking id
+			.doc(id)
+			.delete()
+			.then(() => {
+				resolve("Done");
+			})
+			.catch((err) => {
+				console.log(err);
+				reject(err);
+			});
+		})
 	}
 
-	// TO-DO
-	static updateBooking(id) {
-		// check if current user owns this booking id
+	static updateBooking(id, data) { // pass an object for data e.g. { guests: 2 }
+		return new Promise((resolve, reject) => {
+			Database.collection("bookings")
+			.doc(id)
+			.update(data)
+			.then(() => {
+				resolve("Done");
+			})
+			.catch(err => {
+				reject(err);
+			});
+		})
 	}
 
 	// Checks to see if there are any collisions with dates when making a new booking

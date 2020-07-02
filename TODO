@@ -9,11 +9,11 @@ NOTES:
 TODO:
   ☐ pages/Booking.js : make a list instead
   ☐ pages/Home.js    : use Async storage instead to keep track of phoneNo
-  ☐ scheduleNotificationAsync - https://docs.expo.io/versions/latest/sdk/notifications/#schedulenotificationasyncnotificationrequest-notificationrequestinput-promisestring
   ☐ 
   ☐ 
   ☐ 
-  ☐ 
+  ☐ Implement the update - Start Date, End Date, and Guests
+  ✔ scheduleNotificationAsync - https://docs.expo.io/versions/latest/sdk/notifications/#schedulenotificationasyncnotificationrequest-notificationrequestinput-promisestring @done(20-07-01 20:01)
   ✔ Prompt user for phone no. if they try to make a booking @done(20-07-01 03:28)
   ✔ Pass parameters routes - https://reactnavigation.org/docs/params @done(20-06-30 20:47)
   ✔ Clear Warnings - https://github.com/firebase/firebase-js-sdk/issues/97 @done(20-06-29 21:04)
