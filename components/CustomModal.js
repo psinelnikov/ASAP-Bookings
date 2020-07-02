@@ -79,7 +79,7 @@ const styles = StyleSheet.create({
 	modalHeader: {},
 	title: {
 		fontWeight: "bold",
-		fontSize: 20,
+		fontSize: 15,
 		padding: 15,
 		color: "#000",
 	},

@@ -32,7 +32,7 @@ export default Login = () => {
 
 	return (
 		<>
-			<View style={{ flex: 1, justifyContent: "center" }}>
+			<View style={{ flex: 3, justifyContent: "center" }}>
 				<Text
 					style={{
 						fontSize: 80,
@@ -44,7 +44,7 @@ export default Login = () => {
 			</View>
 			<View style={styles.container}>
 				<Icon.Button
-					style={{ height: 50 }}
+					style={{ margin: 10, alignSelf: "center" }}
 					name="facebook"
 					backgroundColor="#3b5998"
 					onPress={AuthService.loginWithFacebook}
@@ -56,7 +56,7 @@ export default Login = () => {
 					title="Login with Facebook"
 				/> */}
 				<Icon.Button
-					style={{ height: 50 }}
+					style={{ margin: 10, alignSelf: "center" }}
 					name="google"
 					backgroundColor="#DB4437"
 					onPress={AuthService.loginWithGoogle}
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "stretch",
-		justifyContent: "center",
+		justifyContent: "space-evenly",
+		margin: 20,
 	},
 });

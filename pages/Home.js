@@ -1,8 +1,20 @@
 import React, { useEffect } from "react";
 import FontAwesome5 from "react-native-vector-icons/FontAwesome5";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import PhoneService from "../src/services/Phone";
 
 export default function Home({ navigation }) {
+	useEffect(() => {
+		// redirect to phone screen if no phone # is saved
+		PhoneService.userHasPhoneNo()
+			.then((result) => {
+				if (!result) navigation.navigate("Phone");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}, []);
+
 	return (
 		<View style={styles.container}>
 			<TouchableOpacity

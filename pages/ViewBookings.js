@@ -19,16 +19,9 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 
 export default function ViewBookings({ route, navigation }) {
-	const [refreshing, setRefreshing] = React.useState(false);
 	const [bookings, setBookings] = useState([]);
 
 	const keyExtractor = (item, index) => index.toString();
-
-	const onRefresh = React.useCallback(async () => {
-		setRefreshing(true);
-		setBookings(await Bookings.viewBookings());
-		setRefreshing(false);
-	}, [refreshing]);
 
 	useEffect(() => {
 		const fetchBookings = async () => {
@@ -40,8 +33,7 @@ export default function ViewBookings({ route, navigation }) {
 
 	useEffect(() => {
 		if (route.params) {
-			Bookings.viewBookings()
-			.then(data => setBookings(data));
+			Bookings.viewBookings().then((data) => setBookings(data));
 		}
 	}, [route.params]);
 
@@ -52,12 +44,6 @@ export default function ViewBookings({ route, navigation }) {
 			endDate: item.endDate.seconds * 1000,
 			guests: item.guests,
 		});
-		// navigation.navigate("BookingDetails", {
-		// 	id: item.id,
-		// 	startDate: item.startDate.toDate(),
-		// 	endDate: item.endDate,
-		// 	guests: item.guests,
-		// })
 	}
 
 	const renderItem = ({ item }) => (
@@ -77,9 +63,6 @@ export default function ViewBookings({ route, navigation }) {
 	return (
 		<View style={styles.container}>
 			<FlatList
-				refreshControl={
-					<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />
-				}
 				keyExtractor={keyExtractor}
 				data={bookings}
 				renderItem={renderItem}
@@ -93,7 +76,6 @@ const styles = StyleSheet.create({
 		flex: 1,
 		backgroundColor: "#fff",
 		alignItems: "flex-start",
-		justifyContent: "center",
 		flexDirection: "row",
 	},
 });

@@ -151,7 +151,7 @@ export default class App extends React.Component {
 							}}
 						>
 							<Tab.Screen
-								name="Profile"
+								name="ProfileStack"
 								component={ProfileStack}
 								options={{
 									tabBarLabel: "Profile",
