@@ -71,16 +71,18 @@ export default Booking = ({ route, navigation }) => {
 					}
 					console.log("Rebook Unsuccessful!");
 				} else {
-					const created = await Bookings.addBooking(
-						item.startDate,
-						item.endDate,
-						item.guests
-					);
-					if (created) {
-						console.log(`Booking Successful for ID: ${created}!`);
-						return;
+					try {
+						const created = await Bookings.addBooking(
+							item.startDate,
+							item.endDate,
+							item.guests
+						);
+						if (created) {
+							console.log(`Booking Successful for ID: ${created}!`);
+						}
+					} catch (err) {
+						console.log("Booking Unsuccessful: " + err);
 					}
-					console.log("Booking Unsuccessful!");
 				}
 			}}
 			bottomDivider
