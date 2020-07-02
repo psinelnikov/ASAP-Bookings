@@ -24,9 +24,11 @@ export default function Booking({ navigation, route }) {
 	const [people, setPeople] = useState(guests || 1);
 	const today = new Date();
 
-	// serialize before passing through params
-	const serializedDate = date.toISOString();
-	const serializedToday = today.toISOString();
+	function handleViewAvailableTimes() {
+		const dateVal = date.toISOString();
+		const todayVal = today.toISOString();
+		navigation.navigate("Times", { dateVal, people, id, todayVal })
+	}
 
 	return (
 		<View style={styles.container}>
@@ -77,9 +79,7 @@ export default function Booking({ navigation, route }) {
 			<View style={{ flex: 1 }}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() =>
-						navigation.navigate("Times", { serializedDate, people, id, serializedToday })
-					}
+					onPress={handleViewAvailableTimes}
 				>
 					<Text>View Available Times</Text>
 				</TouchableOpacity>

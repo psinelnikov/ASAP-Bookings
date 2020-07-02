@@ -20,7 +20,7 @@ import CustomModal from "../components/CustomModal";
 import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route, navigation }) => {
-	const { date, people, id, today } = route.params;
+	const { dateVal, people, id, todayVal } = route.params;
 	const [blockedTime, setBlockedTime] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [bookings, setBookings] = useState([]);
@@ -29,12 +29,12 @@ export default Booking = ({ route, navigation }) => {
 	const [localGuests, setLocalGuests] = useState(1);
 
 	useEffect(() => {
-		if (moment(date).isSameOrAfter(today, "day")) {
+		if (moment(dateVal).isSameOrAfter(todayVal, "day")) {
 			let startDate;
-			if (moment(date).hour() < 8) {
-				startDate = moment(date).set({ hour: 8, minute: 0, second: 0 }).toDate();
+			if (moment(dateVal).hour() < 8) {
+				startDate = moment(dateVal).set({ hour: 8, minute: 0, second: 0 }).toDate();
 			} else {
-				startDate = moment(date).ceil(20, "minutes").toDate();
+				startDate = moment(dateVal).ceil(20, "minutes").toDate();
 			}
 
 			let endDate = moment(startDate).hours(16).minutes(59);
