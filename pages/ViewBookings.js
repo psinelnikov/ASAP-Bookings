@@ -49,7 +49,7 @@ export default function ViewBookings({ route, navigation }) {
 			onPress={() =>
 				navigation.navigate("BookingDetails", {
 					id: item.id,
-					startDate: item.startDate,
+					startDate: item.startDate.toDate(),
 					endDate: item.endDate,
 					guests: item.guests,
 				})

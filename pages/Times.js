@@ -8,12 +8,17 @@ import "moment-round";
 import { Picker } from "@react-native-community/picker";
 
 import Bookings from "../src/services/Bookings";
+import CustomModal from "../components/CustomModal";
 import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route, navigation }) => {
 	const { date, people, id, today } = route.params;
 	const [blockedTime, setBlockedTime] = useState([]);
+	const [modalVisible, setModalVisible] = useState(false);
 	const [bookings, setBookings] = useState([]);
+	const [localStartDate, setLocalStartDate] = useState(new Date());
+	const [localEndDate, setLocalEndDate] = useState(new Date());
+	const [localGuests, setLocalGuests] = useState(1);
 
 	useEffect(() => {
 		if (moment(date).isSameOrAfter(today, "day")) {
@@ -57,31 +62,11 @@ export default Booking = ({ route, navigation }) => {
 			title={`${moment(item.startDate).format("h:mm")} - ${moment(
 				item.endDate
 			).format("h:mm")}`}
-			onPress={async () => {
-				if (id) {
-					const updated = await Bookings.updateBooking(id, {
-						startDate: item.startDate,
-						endDate: item.endDate,
-						guests: item.guests,
-					});
-					if (updated) {
-						console.log(`Successfully updated ID: ${id}!`);
-						navigation.navigate("BookingDetails", { id });
-						return;
-					}
-					console.log("Rebook Unsuccessful!");
-				} else {
-					const created = await Bookings.addBooking(
-						item.startDate,
-						item.endDate,
-						item.guests
-					);
-					if (created) {
-						console.log(`Booking Successful for ID: ${created}!`);
-						return;
-					}
-					console.log("Booking Unsuccessful!");
-				}
+			onPress={() => {
+				setLocalStartDate(item.startDate);
+				setLocalEndDate(item.endDate);
+				setLocalGuests(item.guests);
+				setModalVisible(!modalVisible);
 			}}
 			bottomDivider
 			chevron
@@ -89,19 +74,80 @@ export default Booking = ({ route, navigation }) => {
 	);
 
 	return (
-		<View style={styles.container}>
-			{bookings.length > 0 ? (
-				<FlatList
-					keyExtractor={keyExtractor}
-					data={bookings}
-					renderItem={renderItem}
+		<>
+			<View>
+				<CustomModal
+					visible={modalVisible}
+					title="Hello!"
+					message="Do you want to create a booking?"
+					onPress={async () => {
+						if (id) {
+							const updated = await Bookings.updateBooking(id, {
+								startDate: localStartDate,
+								endDate: localEndDate,
+								guests: localGuests,
+							});
+							if (updated) {
+								console.log(`Successfully updated ID: ${id}!`);
+								navigation.navigate("BookingDetails", {
+									id,
+									endDate: localEndDate,
+									startDate: localStartDate,
+									guests: localGuests,
+								});
+								return;
+							}
+							console.log("Rebook Unsuccessful!");
+						} else {
+							const created = await Bookings.addBooking(
+								localStartDate,
+								localEndDate,
+								localGuests
+							);
+							if (created) {
+								console.log(`Booking Successful for ID: ${created}!`);
+								// navigation.navigate("ViewBookings", {
+								// 	screen: "BookingDetails",
+								// 	params: {
+								// 		screen: "Sound",
+								// 		params: {
+								// 			screen: "Media",
+								// 		},
+								// 	},
+								// });
+								navigation.navigate("ViewBookingsStack", {
+									screen: "ViewBookings",
+									params: {
+										screen: "BookingDetails",
+										params: {
+											id: created,
+											endDate: localEndDate,
+											startDate: localStartDate,
+											guests: localGuests,
+										},
+									},
+								});
+								return;
+							}
+							console.log("Booking Unsuccessful!");
+						}
+					}}
 				/>
-			) : (
-				<Text style={{ alignSelf: "center" }}>
-					Sorry, there are no available bookings for this day
-				</Text>
-			)}
-		</View>
+			</View>
+			<View style={styles.container}>
+				{bookings.length > 0 ? (
+					<FlatList
+						keyExtractor={keyExtractor}
+						data={bookings}
+						renderItem={renderItem}
+					/>
+				) : (
+					<Text style={{ alignSelf: "center" }}>
+						Sorry, there are no available bookings for this day
+					</Text>
+				)}
+			</View>
+		</>
 	);
 };
 

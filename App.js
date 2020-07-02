@@ -4,7 +4,6 @@ import * as React from "react";
 import Home from "./pages/Home";
 import Profile from "./pages/Profile";
 import ViewBookings from "./pages/ViewBookings";
-import AddBookings from "./pages/AddBookings";
 import { userContext } from "./src/userContext";
 import MaterialCommunityIcons from "react-native-vector-icons/MaterialCommunityIcons";
 
@@ -71,11 +70,6 @@ function AddBookingsStack() {
 			}}
 		>
 			<Screen name="Home" component={Home} options={{ title: "Home" }} />
-			<Screen
-				name="AddBookings"
-				component={AddBookings}
-				options={{ title: "Add a Booking" }}
-			/>
 			<Screen
 				name="Booking"
 				options={{ title: "Booking" }}

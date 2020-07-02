@@ -8,10 +8,12 @@ import "moment-round";
 import { Picker } from "@react-native-community/picker";
 
 import Bookings from "../src/services/Bookings";
+import CustomModal from "../components/CustomModal";
 import AuthService from "../src/services/Auth";
 
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
+	const [modalVisible, setModalVisible] = useState(false);
 
 	return (
 		<View style={styles.container}>
@@ -44,10 +46,10 @@ export default function BookingDetails({ navigation, route }) {
 					}}
 				>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment(startDate.toDate()).format("dddd, LL")}
+						{moment(startDate).format("dddd, LL")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment(startDate.toDate()).format("LT")}
+						{moment(startDate).format("LT")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>{guests}</Text>
 				</View>
@@ -62,18 +64,30 @@ export default function BookingDetails({ navigation, route }) {
 				<TouchableOpacity
 					style={styles.button}
 					onPress={() =>
-						navigation.navigate("Booking", { id, startDate, guests })
+						navigation.navigate("Booking", {
+							id,
+							startDate,
+							guests,
+						})
 					}
 				>
-					<Text>Rebook</Text>
+					<Text>Reschedule</Text>
 				</TouchableOpacity>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={async () => {
-						await Bookings.cancelBooking(id);
-						navigation.navigate("ViewBookings");
+					onPress={() => {
+						setModalVisible(!modalVisible);
 					}}
 				>
+					<CustomModal
+						visible={modalVisible}
+						title="Warning!"
+						message="Do you want to cancel your booking?"
+						onPress={async () => {
+							await Bookings.cancelBooking(id);
+							navigation.navigate("ViewBookings");
+						}}
+					/>
 					<Text>Cancel Booking</Text>
 				</TouchableOpacity>
 			</View>
