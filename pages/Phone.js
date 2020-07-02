@@ -19,7 +19,7 @@ export default Phone = ({ navigation }) => {
 			.then(() => {
 				navigation.reset({
 					index: 1,
-					routes: [{ name: "AddBookingStack" }],
+					routes: [{ name: "AddBookingsStack" }],
 				});
 			})
 			.catch((err) => {
@@ -42,7 +42,7 @@ export default Phone = ({ navigation }) => {
 				onChangeText={(text) => setPhoneNo(text)}
 				value={phoneNo}
 			/>
-			<TouchableOpacity style={styles.button} onPress={() => savePhoneNo}>
+			<TouchableOpacity style={styles.button} onPress={() => savePhoneNo()}>
 				<Text>Save</Text>
 			</TouchableOpacity>
 		</View>

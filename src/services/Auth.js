@@ -3,19 +3,8 @@ import * as Google from "expo-google-app-auth";
 
 import { config } from "../config";
 import { Firebase, Database } from "../integrations/firebase";
-import PhoneService from "./Phone";
 
 export default class AuthService {
-	phoneNumberRedirect() {
-		// redirect to phone screen if no phone # is saved
-		PhoneService.userHasPhoneNo()
-			.then((result) => {
-				if (!result) navigation.navigate("Phone");
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	}
 	/**
 	 * Login with Facebook and Firebase
 	 *
@@ -44,7 +33,6 @@ export default class AuthService {
 					// user already exists
 				} else {
 					AuthService.addUserToDatabase(user);
-					phoneNumberRedirect();
 				}
 			}
 		} catch (err) {
@@ -75,7 +63,6 @@ export default class AuthService {
 					// user already exists
 				} else {
 					AuthService.addUserToDatabase(user);
-					phoneNumberRedirect();
 				}
 			} else {
 				console.error("failed to login with google");
