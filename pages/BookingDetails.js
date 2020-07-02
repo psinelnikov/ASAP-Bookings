@@ -14,7 +14,6 @@ import AuthService from "../src/services/Auth";
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
 	const [modalVisible, setModalVisible] = useState(false);
-
 	// useEffect(() => {
 	// 	console.log(route.params.id);
 	// }, [route.params])
@@ -50,10 +49,10 @@ export default function BookingDetails({ navigation, route }) {
 					}}
 				>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment.unix(startDate).format("dddd, LL")}
+						{moment(startDate).format("dddd, LL")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>
-						{moment.unix(startDate).format("LT")}
+						{moment(startDate).format("LT")}
 					</Text>
 					<Text style={{ fontWeight: "bold" }}>{guests}</Text>
 				</View>
@@ -90,7 +89,15 @@ export default function BookingDetails({ navigation, route }) {
 						message="Do you want to cancel your booking?"
 						onPress={async () => {
 							await Bookings.cancelBooking(id);
-							navigation.navigate("ViewBookings");
+							navigation.navigate("ViewBookingsStack", {
+								screen: "ViewBookings",
+								params: {
+									id: id,
+									endDate: endDate,
+									startDate: startDate,
+									guests: guests,
+								},
+							});
 						}}
 					/>
 					<Text>Cancel Booking</Text>

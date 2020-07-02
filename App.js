@@ -40,10 +40,6 @@ console.warn = (message) => {
 //   'Non-serializable values were found in the navigation state',
 // ]);
 
-YellowBox.ignoreWarnings([
-	"Non-serializable values were found in the navigation state",
-]);
-
 function ProfileStack() {
 	return (
 		<Stack.Navigator
@@ -134,6 +130,11 @@ export default class App extends React.Component {
 	componentDidMount() {
 		AuthService.subscribeAuthChange((user) => this.setState({ user }));
 		PushNotification.registerForPushNotificationsAsync();
+		//PushNotification.clearAllNotifications();
+		// PushNotification.getAllNotifications()
+		// .then(data => {
+		// 	console.log(data);
+		// });
 	}
 
 	render() {

@@ -17,6 +17,15 @@ export default class PushNotification {
   //   console.log(notification);
   // });
 
+  static getAllNotifications = async () => {
+    const notifications = await Notifications.getAllScheduledNotificationsAsync();
+    return notifications;
+  }
+
+  static clearAllNotifications = async () => {
+    await Notifications.cancelAllScheduledNotificationsAsync();
+  }
+
   static scheduleBookingNotification = async (timestamp) => {
     const identifier = await Notifications.scheduleNotificationAsync({
       content: {
@@ -32,7 +41,7 @@ export default class PushNotification {
   }
 
   static cancelBookingNotification = async (id) => {
-    console.log("cancelled schedule notification");
+    //console.log("cancelled schedule notification");
     await Notifications.cancelScheduledNotificationAsync(id);
   }
 

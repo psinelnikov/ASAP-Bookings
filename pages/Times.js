@@ -32,9 +32,9 @@ export default Booking = ({ route, navigation }) => {
 		if (moment(date).isSameOrAfter(today, "day")) {
 			let startDate;
 			if (moment(date).hour() < 8) {
-				startDate = moment(date).set({ hour: 8, minute: 0, second: 0 });
+				startDate = moment(date).set({ hour: 8, minute: 0, second: 0 }).toDate();
 			} else {
-				startDate = moment(date).ceil(20, "minutes");
+				startDate = moment(date).ceil(20, "minutes").toDate();
 			}
 
 			let endDate = moment(startDate).hours(16).minutes(59);
@@ -54,7 +54,6 @@ export default Booking = ({ route, navigation }) => {
 					startDate: startDate,
 					endDate: endDate,
 				});
-
 				startDate = endDate;
 			}
 			// get blocked times, then add { blocked: true } to each booking, if blocked
@@ -97,44 +96,52 @@ export default Booking = ({ route, navigation }) => {
 								endDate: localEndDate,
 								guests: localGuests,
 							});
+							
 							if (updated) {
+								const startDate = localStartDate.toISOString();
+								const endDate = localEndDate.toISOString();
+								//console.log(startDate.toISOString());
 								console.log(`Successfully updated ID: ${id}!`);
-								navigation.navigate("BookingDetails", {
-									id,
-									endDate: localEndDate,
-									startDate: localStartDate,
-									guests: localGuests,
+								navigation.navigate("ViewBookingsStack", {
+									screen: "ViewBookings",
+									params: {
+										id: id,
+										endDate: endDate,
+										startDate: startDate,
+										guests: localGuests,
+
+										screen: "BookingDetails",
+										params: {
+											id: id,
+											endDate: endDate,
+											startDate: startDate,
+											guests: localGuests,
+										},
+									},
 								});
 								return;
 							}
 							console.log("Rebook Unsuccessful!");
 						} else {
+							//console.log(localStartDate, localEndDate);
+							const startDate = localStartDate
+							const endDate = localEndDate
 							const created = await Bookings.addBooking(
-								localStartDate,
-								localEndDate,
+								startDate,
+								endDate,
 								localGuests
 							);
 							if (created) {
+								const startDate = localStartDate.getDate();
+								const endDate = localEndDate.getDate();
 								console.log(`Booking Successful for ID: ${created}!`);
-								// navigation.navigate("ViewBookings", {
-								// 	screen: "BookingDetails",
-								// 	params: {
-								// 		screen: "Sound",
-								// 		params: {
-								// 			screen: "Media",
-								// 		},
-								// 	},
-								// });
 								navigation.navigate("ViewBookingsStack", {
 									screen: "ViewBookings",
 									params: {
-										screen: "BookingDetails",
-										params: {
-											id: created,
-											endDate: localEndDate,
-											startDate: localStartDate,
-											guests: localGuests,
-										},
+										id: created,
+										endDate: endDate,
+										startDate: startDate,
+										guests: localGuests,
 									},
 								});
 								return;

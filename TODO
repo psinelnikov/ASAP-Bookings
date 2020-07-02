@@ -1,6 +1,8 @@
 TODO:
   ☐ ViewBookings doesn't update right away after making one
   ☐ Implement food take-out option
+  ☐ View should reflect correctly for CRUD
+  ☐ Push notifications need to be rescheduled when booking updated
   ✔ If it detects that there is a blocked time, it will not display the corresponding time slots @done(20-07-02 03:28)
   ✔ Implement calendar for available slots @done(20-07-02 02:50)
   ✔ Prompt user to enter phone number if they don't have one @done(20-07-02 02:50)

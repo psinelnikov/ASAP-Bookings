@@ -40,20 +40,24 @@ export default function ViewBookings({ route, navigation }) {
 
 	useEffect(() => {
 		if (route.params?.id) {
-			const newBookings = bookings.filter(booking => 
-				booking.id != route.params.id
-			);
-			setBookings(newBookings);
+			Bookings.viewBookings()
+			.then(data => setBookings(data));
 		}
 	}, [route.params?.id]);
 
 	function viewDetails(item) {
 		navigation.navigate("BookingDetails", {
 			id: item.id,
-			startDate: item.startDate.seconds,
-			endDate: item.endDate.seconds,
+			startDate: item.startDate.seconds * 1000,
+			endDate: item.endDate.seconds * 1000,
 			guests: item.guests,
 		});
+		// navigation.navigate("BookingDetails", {
+		// 	id: item.id,
+		// 	startDate: item.startDate.toDate(),
+		// 	endDate: item.endDate,
+		// 	guests: item.guests,
+		// })
 	}
 
 	const renderItem = ({ item }) => (
@@ -64,14 +68,7 @@ export default function ViewBookings({ route, navigation }) {
 			subtitle={
 				item.guests > 1 ? `${item.guests} People` : `${item.guests} Person`
 			}
-			onPress={() =>
-				navigation.navigate("BookingDetails", {
-					id: item.id,
-					startDate: item.startDate.toDate(),
-					endDate: item.endDate,
-					guests: item.guests,
-				})
-			}
+			onPress={() => viewDetails(item)}
 			bottomDivider
 			chevron
 		/>

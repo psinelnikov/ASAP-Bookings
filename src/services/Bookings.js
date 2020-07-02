@@ -2,6 +2,8 @@ import { Firebase, Database } from "../integrations/firebase";
 import moment from "moment";
 
 import PushNotification from "./PushNotification";
+// import { getAllScheduledNotificationsAsync } from "expo-notifications";
+// import { Notifications } from "expo";
 
 export default class Bookings {
 	static addBooking(startDate, endDate, numOfGuests) {
@@ -94,7 +96,7 @@ export default class Bookings {
 			bookingRef.get().then(doc => {
 				const notificationId = doc.data().notification;
 				bookingRef.delete().then(() => {
-					PushNotification.cancelBookingNotification().then(() => {
+					PushNotification.cancelBookingNotification(notificationId).then(() => {
 						resolve("Done");
 					})
 				});
@@ -107,13 +109,23 @@ export default class Bookings {
 
 	static updateBooking(id, data) { // pass an object for data e.g. { guests: 2 }
 		return new Promise((resolve, reject) => {
-			Database.collection("bookings")
-			.doc(id)
-			.update(data)
-			.then(() => {
-				resolve("Done");
-			})
-			.catch(err => {
+			const bookingRef = Database.collection("bookings").doc(id);
+			bookingRef.get().then(doc => {
+				const notificationId = doc.data().notification;
+				PushNotification.cancelBookingNotification(notificationId)
+				.then(() => {
+					const notificationTime = (data.startDate || doc.data().startDate) - (30 * 60000); // 30 minutes before start
+					PushNotification.scheduleBookingNotification(notificationTime)
+					.then(notificationId => {
+						data.notification = notificationId;
+						bookingRef.update(data)
+						.then(() => {
+							resolve("Done");
+						})
+					});
+				});
+			}).catch(err => {
+				console.log(err);
 				reject(err);
 			});
 		})
