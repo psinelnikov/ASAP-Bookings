@@ -32,10 +32,7 @@ export default function ViewBookings({ route, navigation }) {
 			subtitle={
 				item.guests > 1 ? `${item.guests} People` : `${item.guests} Person`
 			}
-			onPress={async () => {
-				await Bookings.cancelBooking(item.id);
-				setBookings(await Bookings.viewBookings());
-			}}
+			onPress={() => navigation.navigate("BookingDetails", { id: item.id })}
 			bottomDivider
 			chevron
 		/>

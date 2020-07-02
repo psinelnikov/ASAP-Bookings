@@ -16,7 +16,8 @@ import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
 import PhoneService from "../src/services/Phone";
 
-export default function Booking({ navigation }) {
+export default function Booking({ navigation, route }) {
+	const { id } = route.params;
 	const [date, setDate] = useState(new Date());
 	const [markedDates, setMarkedDates] = useState(
 		moment(date).format("YYYY-MM-DD")
@@ -84,7 +85,7 @@ export default function Booking({ navigation }) {
 			<View style={{ flex: 1 }}>
 				<TouchableOpacity
 					style={styles.button}
-					onPress={() => navigation.navigate("Times", { date, people })}
+					onPress={() => navigation.navigate("Times", { date, people, id })}
 				>
 					<Text>View Available Times</Text>
 				</TouchableOpacity>
