@@ -27,6 +27,7 @@ export default Booking = ({ route, navigation }) => {
 	const [localStartDate, setLocalStartDate] = useState(new Date());
 	const [localEndDate, setLocalEndDate] = useState(new Date());
 	const [localGuests, setLocalGuests] = useState(1);
+	const [isLoading, setLoading] = useState(true);
 
 	useEffect(() => {
 		if (moment(dateVal).isSameOrAfter(todayVal, "day")) {
@@ -59,7 +60,11 @@ export default Booking = ({ route, navigation }) => {
 			// get blocked times, then add { blocked: true } to each booking, if blocked
 			Bookings.getBlockedTimes(tempBooks).then((blockedTimes) => {
 				setBookings(blockedTimes);
+			}).catch(err => {
+				console.log(err);
 			});
+		} else {
+			setLoading(false);
 		}
 	}, []);
 
@@ -68,9 +73,9 @@ export default Booking = ({ route, navigation }) => {
 	const renderItem = ({ item }) => (
 		<ListItem
 			titleStyle={item.blocked ? styles.blocked : null}
-			title={`${moment(item.startDate).format("h:mm")} - ${moment(
+			title={`${moment(item.startDate).format("h:mm A")} - ${moment(
 				item.endDate
-			).format("h:mm")}`}
+			).format("h:mm A")}`}
 			onPress={() => {
 				setLocalStartDate(item.startDate);
 				setLocalEndDate(item.endDate);
@@ -159,7 +164,7 @@ export default Booking = ({ route, navigation }) => {
 					/>
 				) : (
 					<Text style={{ alignSelf: "center" }}>
-						Sorry, there are no available bookings for this day
+						{isLoading ? "Loading available times.." : "Sorry, there are no available bookings for this day"}
 					</Text>
 				)}
 			</View>

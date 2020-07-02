@@ -7,6 +7,7 @@ import {
 	Button,
 	Image,
 	FlatList,
+	Alert,
 } from "react-native";
 import { Picker } from "@react-native-community/picker";
 import { CalendarList } from "react-native-calendars";
@@ -27,6 +28,12 @@ export default function Booking({ navigation, route }) {
 	function handleViewAvailableTimes() {
 		const dateVal = date.toISOString();
 		const todayVal = today.toISOString();
+
+		if (!dateVal) {
+			Alert.alert('Hello!', 'Please select a day to book your reservation.');
+			return;
+		}
+
 		navigation.navigate("Times", { dateVal, people, id, todayVal })
 	}
 

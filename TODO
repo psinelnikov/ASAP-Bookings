@@ -6,7 +6,6 @@ TODO:
   ☐ 
   ☐ 
   ☐ 
-  ☐ 
   ☐ Booking times need to refresh on focus - https://reactnavigation.org/docs/navigation-lifecycle/
   ✔ ViewBookings doesn't update right away after making one @done(20-07-02 06:51)
   ✔ View should reflect correctly for CRUD @done(20-07-02 06:51)
