@@ -12,7 +12,7 @@ TODO:
   ☐ 
   ☐ 
   ☐ 
-  ☐ Implement the update - Start Date, End Date, and Guests
+  ✔ Implement the update - Start Date, End Date, and Guests @done(20-07-01 20:18)
   ✔ scheduleNotificationAsync - https://docs.expo.io/versions/latest/sdk/notifications/#schedulenotificationasyncnotificationrequest-notificationrequestinput-promisestring @done(20-07-01 20:01)
   ✔ Prompt user for phone no. if they try to make a booking @done(20-07-01 03:28)
   ✔ Pass parameters routes - https://reactnavigation.org/docs/params @done(20-06-30 20:47)

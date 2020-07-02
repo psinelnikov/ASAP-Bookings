@@ -35,6 +35,10 @@ console.warn = (message) => {
 		_console.warn(message);
 	}
 };
+// Also fix this stupid yellow box
+YellowBox.ignoreWarnings([
+  'Non-serializable values were found in the navigation state',
+]);
 
 function ProfileStack() {
 	return (
