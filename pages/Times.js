@@ -4,7 +4,7 @@ import {
 	StyleSheet,
 	Text,
 	View,
-	Button,
+	RefreshControl,
 	Image,
 	FlatList,
 	Alert,
@@ -21,7 +21,6 @@ import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route, navigation }) => {
 	const { dateVal, people, id, todayVal } = route.params;
-	const [blockedTime, setBlockedTime] = useState([]);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [bookings, setBookings] = useState([]);
 	const [localStartDate, setLocalStartDate] = useState(new Date());
@@ -29,11 +28,14 @@ export default Booking = ({ route, navigation }) => {
 	const [localGuests, setLocalGuests] = useState(1);
 	const [isLoading, setLoading] = useState(true);
 
-	useEffect(() => {
+	const refresh = async () => {
+		setLoading(true);
 		if (moment(dateVal).isSameOrAfter(todayVal, "day")) {
 			let startDate;
 			if (moment(dateVal).hour() < 8) {
-				startDate = moment(dateVal).set({ hour: 8, minute: 0, second: 0 }).toDate();
+				startDate = moment(dateVal)
+					.set({ hour: 8, minute: 0, second: 0 })
+					.toDate();
 			} else {
 				startDate = moment(dateVal).ceil(20, "minutes").toDate();
 			}
@@ -58,14 +60,24 @@ export default Booking = ({ route, navigation }) => {
 				startDate = endDate;
 			}
 			// get blocked times, then add { blocked: true } to each booking, if blocked
-			Bookings.getBlockedTimes(tempBooks).then((blockedTimes) => {
-				setBookings(blockedTimes);
-			}).catch(err => {
-				console.log(err);
-			});
+			Bookings.getBlockedTimes(tempBooks)
+				.then((blockedTimes) => {
+					setBookings(blockedTimes);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
 		} else {
 			setLoading(false);
 		}
+	};
+
+	useEffect(() => {
+		async function fetchData() {
+			await fetchData();
+		}
+
+		refresh();
 	}, []);
 
 	const keyExtractor = (item, index) => index.toString();
@@ -101,12 +113,13 @@ export default Booking = ({ route, navigation }) => {
 								endDate: localEndDate,
 								guests: localGuests,
 							});
-							
+
 							if (updated) {
 								const startDate = localStartDate.toISOString();
 								const endDate = localEndDate.toISOString();
 								//console.log(startDate.toISOString());
 								console.log(`Successfully updated ID: ${id}!`);
+								refresh();
 								navigation.navigate("ViewBookingsStack", {
 									screen: "ViewBookings",
 									params: {
@@ -128,8 +141,8 @@ export default Booking = ({ route, navigation }) => {
 							console.log("Rebook Unsuccessful!");
 						} else {
 							//console.log(localStartDate, localEndDate);
-							const startDate = localStartDate
-							const endDate = localEndDate
+							const startDate = localStartDate;
+							const endDate = localEndDate;
 							const created = await Bookings.addBooking(
 								startDate,
 								endDate,
@@ -139,6 +152,7 @@ export default Booking = ({ route, navigation }) => {
 								const startDate = localStartDate.getDate();
 								const endDate = localEndDate.getDate();
 								console.log(`Booking Successful for ID: ${created}!`);
+								refresh();
 								navigation.navigate("ViewBookingsStack", {
 									screen: "ViewBookings",
 									params: {
@@ -164,7 +178,9 @@ export default Booking = ({ route, navigation }) => {
 					/>
 				) : (
 					<Text style={{ alignSelf: "center" }}>
-						{isLoading ? "Loading available times.." : "Sorry, there are no available bookings for this day"}
+						{isLoading
+							? "Loading available times.."
+							: "Sorry, there are no available bookings for this day"}
 					</Text>
 				)}
 			</View>
