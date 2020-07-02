@@ -36,6 +36,10 @@ console.warn = (message) => {
 	}
 };
 
+YellowBox.ignoreWarnings([
+	"Non-serializable values were found in the navigation state",
+]);
+
 function ProfileStack() {
 	return (
 		<Stack.Navigator

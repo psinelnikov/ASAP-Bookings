@@ -1,5 +1,13 @@
 import React, { useState, useEffect } from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Button, Image, FlatList } from "react-native";
+import {
+	StyleSheet,
+	Text,
+	View,
+	TouchableOpacity,
+	Button,
+	Image,
+	FlatList,
+} from "react-native";
 import { Picker } from "@react-native-community/picker";
 import { CalendarList } from "react-native-calendars";
 import moment from "moment";
@@ -19,12 +27,12 @@ export default function Booking({ navigation }) {
 	useEffect(() => {
 		// redirect to phone screen if no phone # is saved
 		const hasPhoneNo = PhoneService.userHasPhoneNo()
-		.then(result => {
-			if (!result) navigation.navigate("Phone");
-		})
-		.catch(err => {
-			console.log(err);
-		});
+			.then((result) => {
+				if (!result) navigation.navigate("Phone");
+			})
+			.catch((err) => {
+				console.log(err);
+			});
 	}, []);
 
 	return (
@@ -41,7 +49,9 @@ export default function Booking({ navigation }) {
 					}}
 					onDayPress={(date) => {
 						if (moment(today).date() !== date.day) {
-							setDate(new Date(date.year, date.month, date.day, 0, 0, 0, 0));
+							setDate(
+								new Date(date.year, date.month - 1, date.day, 0, 0, 0, 0)
+							);
 						} else {
 							setDate(today);
 						}
@@ -81,7 +91,7 @@ export default function Booking({ navigation }) {
 			</View>
 		</View>
 	);
-};
+}
 
 const styles = StyleSheet.create({
 	container: {
