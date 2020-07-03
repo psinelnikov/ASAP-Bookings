@@ -44,7 +44,7 @@ expo start
 ```
 
 ## Dependencies
-List of the main dependencies used for this project:
+The main dependencies used for this project:
 * react-native
 * react-navigation
 * expo
