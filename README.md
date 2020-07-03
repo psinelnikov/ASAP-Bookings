@@ -6,6 +6,13 @@ Supported devices:
 * Android
 * iOS
 
+## Table of contents
+- [How it works](#how-it-works)
+- [Installing the development build](#installing-the-development-build)
+- [Running the development build](#running-the-development-build)
+- [Dependencies](#dependencies)
+- [Authors](#authors)
+
 ## How it works
 ![0](/images/0.png)<br />
 Login with Facebook or Google<br /><br />
@@ -29,7 +36,7 @@ Easily reschedule or cancel appointments.<br /><br />
 git clone https://github.com/pavelsinelnikov/ASAP-Bookings.git
 ```
 * Set up environment.js with environment variables
-* Set up Firebase for Facebook and Google authentication>
+* Set up Firebase for Facebook and Google authentication
 * Download google-services.json and place in root directory
 ## Running the development build
 ```
@@ -45,5 +52,5 @@ List of the main dependencies used for this project:
 * moment
 
 ## Authors
-* **Stephen Park** - Full-stack developer - [spark0843](https://github.com/spark0843)
-* **Pavel Sinelnikov** - Full-stack developer - [pavelsinelnikov](https://github.com/pavelsinelnikov)
+* **Stephen Park** - [spark0843](https://github.com/spark0843)
+* **Pavel Sinelnikov** - [pavelsinelnikov](https://github.com/pavelsinelnikov)
