@@ -2,6 +2,10 @@
 # ASAP Bookings
 A platform that allows users to schedule appointments with their favourite restaurants and minimize waiting time by increasing the efficiency of the process. We aim to minimize the scope of spreading COVID-19 by decreasing the gathering of people in lineups for both Dine-In and Takeout orders.
 
+Supported devices:
+* Android
+* iOS
+
 ## How it works
 ![0](/images/0.png)<br />
 Login with Facebook or Google<br /><br />
@@ -20,12 +24,26 @@ See a list of all your bookings.<br /><br />
 ![7](/images/7.png)<br />
 Easily reschedule or cancel appointments.<br /><br />
 
-<!-- ## How to use
-* Clone the repo to a local directory
-* Set up environment.js with environment variables
-* Set up Firebase and move google-services.json to root folder
+## Installing the development build
 ```
 git clone https://github.com/pavelsinelnikov/ASAP-Bookings.git
+```
+* Set up environment.js with environment variables
+* Set up Firebase for Facebook and Google authentication>
+* Download google-services.json and place in root directory
+## Running the development build
+```
 expo start
-``` -->
+```
 
+## Dependencies
+List of the main dependencies used for this project:
+* react-native
+* react-navigation
+* expo
+* firebase
+* moment
+
+## Authors
+* **Stephen Park** - Full-stack developer - [spark0843](https://github.com/spark0843)
+* **Pavel Sinelnikov** - Full-stack developer - [pavelsinelnikov](https://github.com/pavelsinelnikov)
