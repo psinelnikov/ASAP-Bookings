@@ -6,6 +6,7 @@ import {
 	View,
 	TouchableOpacity,
 	ToastAndroid,
+	Alert,
 } from "react-native";
 import { CalendarList } from "react-native-calendars";
 import DateTimePicker from "@react-native-community/datetimepicker";
@@ -99,17 +100,21 @@ export default function BookingDetails({ navigation, route }) {
 							guests > 1 ? "People?" : "Person?"
 						}`}
 						onPress={async () => {
-							await Bookings.cancelBooking(id);
-							showToast("Booking Successfully Cancelled!");
-							navigation.navigate("ViewBookingsStack", {
-								screen: "ViewBookings",
-								params: {
-									id: id,
-									endDate: endDate,
-									startDate: startDate,
-									guests: guests,
-								},
-							});
+							try {
+								await Bookings.cancelBooking(id);
+								showToast("Booking Successfully Cancelled!");
+								navigation.navigate("ViewBookingsStack", {
+									screen: "ViewBookings",
+									params: {
+										id: id,
+										endDate: endDate,
+										startDate: startDate,
+										guests: guests,
+									},
+								});
+							} catch (e) {
+								Alert.alert("Error", "Unable to delete booking.");
+							}
 						}}
 					/>
 					<Text>Cancel Booking</Text>

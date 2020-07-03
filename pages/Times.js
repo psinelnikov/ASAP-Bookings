@@ -65,6 +65,11 @@ export default Booking = ({ route, navigation }) => {
 				});
 				startDate = endDate;
 			}
+			// stop loading if there are no results
+			if (tempBooks.length < 1) {
+				setLoading(false);
+				return;
+			}
 			// get blocked times, then add { blocked: true } to each booking, if blocked
 			Bookings.getBlockedTimes(tempBooks)
 				.then((blockedTimes) => {
@@ -79,10 +84,6 @@ export default Booking = ({ route, navigation }) => {
 	};
 
 	useEffect(() => {
-		async function fetchData() {
-			await fetchData();
-		}
-
 		refresh();
 	}, []);
 
@@ -118,40 +119,48 @@ export default Booking = ({ route, navigation }) => {
 					}`}
 					onPress={async () => {
 						if (id) {
-							const updated = await Bookings.updateBooking(id, {
-								startDate: localStartDate,
-								endDate: localEndDate,
-								guests: localGuests,
-							});
-
-							if (updated) {
-								showToast("Booking Successfully Updated!");
-								refresh();
-								navigation.reset({
-									index: 2,
-									routes: [{ name: "ViewBookingsStack" }],
+							try {
+								const updated = await Bookings.updateBooking(id, {
+									startDate: localStartDate,
+									endDate: localEndDate,
+									guests: localGuests,
 								});
-								return;
+	
+								if (updated) {
+									showToast("Booking Successfully Updated!");
+									// refresh();
+									navigation.reset({
+										index: 2,
+										routes: [{ name: "ViewBookingsStack" }],
+									});
+									return;
+								}
+								showToast("An Error Occurred with Updating Booking");
+							} catch (e) {
+								Alert.alert("Error", e);
 							}
-							showToast("An Error Occurred with Updating Booking");
 						} else {
-							const startDate = localStartDate;
-							const endDate = localEndDate;
-							const created = await Bookings.addBooking(
-								startDate,
-								endDate,
-								localGuests
-							);
-							if (created) {
-								showToast("Booking Successfully Created!");
-								refresh();
-								navigation.reset({
-									index: 2,
-									routes: [{ name: "ViewBookingsStack" }],
-								});
-								return;
+							try {
+								const startDate = localStartDate;
+								const endDate = localEndDate;
+								const created = await Bookings.addBooking(
+									startDate,
+									endDate,
+									localGuests
+								);
+								if (created) {
+									showToast("Booking Successfully Created!");
+								//	refresh();
+									navigation.reset({
+										index: 2,
+										routes: [{ name: "ViewBookingsStack" }],
+									});
+									return;
+								}
+								showToast("An Error Occurred While Creating a Booking!");
+							} catch (e) {
+								Alert.alert("Error", e);
 							}
-							showToast("An Error Occurred While Creating a Booking!");
 						}
 					}}
 				/>

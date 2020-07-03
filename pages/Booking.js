@@ -15,6 +15,8 @@ import moment from "moment";
 
 import Bookings from "../src/services/Bookings";
 import AuthService from "../src/services/Auth";
+import PhoneService from "../src/services/Phone";
+
 
 export default function Booking({ navigation, route }) {
 	const { id, startDate, guests } = route.params;
@@ -36,6 +38,19 @@ export default function Booking({ navigation, route }) {
 
 		navigation.navigate("Times", { dateVal, people, id, todayVal })
 	}
+
+	// useEffect(() => {
+	// 	navigation.addListener("focus", () => {
+	// 		// redirect to phone screen if no phone # is saved
+	// 		PhoneService.userHasPhoneNo()
+	// 		.then((result) => {
+	// 			if (!result) navigation.navigate("Phone");
+	// 		})
+	// 		.catch((err) => {
+	// 			console.log(err);
+	// 		});
+	// 	})
+	// }, []);
 
 	return (
 		<View style={styles.container}>

@@ -15,7 +15,7 @@ export default class PhoneService {
         console.log(err);
         reject(err);
       });
-    });``
+    });
   }
 
   static savePhoneNo(phoneNo) {

@@ -101,7 +101,6 @@ export default class Bookings {
 					})
 				});
 			}).catch(err => {
-				console.log(err);
 				reject(err);
 			});
 		})

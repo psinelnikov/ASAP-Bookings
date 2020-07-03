@@ -19,7 +19,15 @@ export default Phone = ({ navigation }) => {
 			.then(() => {
 				navigation.reset({
 					index: 1,
-					routes: [{ name: "AddBookingsStack" }],
+					routes: [
+						{ name: "Booking", 
+							params: {
+								id: null,
+								startDate: null,
+								guests: null
+							}
+						}
+					],
 				});
 			})
 			.catch((err) => {
