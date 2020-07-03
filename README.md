@@ -19,9 +19,9 @@ Login with Facebook or Google<br /><br />
 ![1](/images/1.png)<br />
 Make a reservation or opt for a takeout order.<br /><br />
 ![2](/images/2.png)<br />
-When making a reservation, pick a day and number of guests.<br /><br />
+When making a reservation, pick a day and the number of guests attending.<br /><br />
 ![3](/images/3.png)<br />
-Pick an available time.<br /><br />
+Pick an available time for your reservation.<br /><br />
 ![4](/images/4.png)<br />
 Confirm your booking.<br /><br />
 ![5](/images/5.png)<br />
