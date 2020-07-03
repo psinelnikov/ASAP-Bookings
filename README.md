@@ -19,7 +19,7 @@ Login with Facebook or Google<br /><br />
 ![1](/images/1.png)<br />
 Make a reservation or opt for a takeout order.<br /><br />
 ![2](/images/2.png)<br />
-Pick a day and number of guests.<br /><br />
+When making a reservation, pick a day and number of guests.<br /><br />
 ![3](/images/3.png)<br />
 Pick an available time.<br /><br />
 ![4](/images/4.png)<br />
