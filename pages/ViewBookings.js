@@ -1,22 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { ListItem } from "react-native-elements";
-import {
-	StyleSheet,
-	Text,
-	View,
-	Button,
-	Image,
-	FlatList,
-	RefreshControl,
-} from "react-native";
-import { CalendarList } from "react-native-calendars";
-import DateTimePicker from "@react-native-community/datetimepicker";
+import { StyleSheet, View, FlatList } from "react-native";
 import moment from "moment";
 import "moment-round";
-import { Picker } from "@react-native-community/picker";
 
 import Bookings from "../src/services/Bookings";
-import AuthService from "../src/services/Auth";
 
 export default function ViewBookings({ route, navigation }) {
 	const [bookings, setBookings] = useState([]);

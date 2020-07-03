@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import {
 	StyleSheet,
 	Text,
 	View,
 	TouchableOpacity,
-	Image,
 	TextInput,
 } from "react-native";
 
@@ -20,13 +19,14 @@ export default Phone = ({ navigation }) => {
 				navigation.reset({
 					index: 1,
 					routes: [
-						{ name: "Booking", 
+						{
+							name: "Booking",
 							params: {
 								id: null,
 								startDate: null,
-								guests: null
-							}
-						}
+								guests: null,
+							},
+						},
 					],
 				});
 			})

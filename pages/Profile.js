@@ -1,14 +1,7 @@
 import React from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	Button,
-	Image,
-	TouchableOpacity,
-} from "react-native";
+import { StyleSheet, Text, View, Image, TouchableOpacity } from "react-native";
 
-import { Firebase, Database } from "../src/integrations/firebase";
+import { Firebase } from "../src/integrations/firebase";
 import AuthService from "../src/services/Auth";
 import { userContext } from "../src/userContext";
 

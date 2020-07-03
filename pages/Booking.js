@@ -1,22 +1,8 @@
-import React, { useState, useEffect } from "react";
-import {
-	StyleSheet,
-	Text,
-	View,
-	TouchableOpacity,
-	Button,
-	Image,
-	FlatList,
-	Alert,
-} from "react-native";
+import React, { useState } from "react";
+import { StyleSheet, Text, View, TouchableOpacity, Alert } from "react-native";
 import { Picker } from "@react-native-community/picker";
 import { CalendarList } from "react-native-calendars";
 import moment from "moment";
-
-import Bookings from "../src/services/Bookings";
-import AuthService from "../src/services/Auth";
-import PhoneService from "../src/services/Phone";
-
 
 export default function Booking({ navigation, route }) {
 	const { id, startDate, guests } = route.params;
@@ -32,25 +18,12 @@ export default function Booking({ navigation, route }) {
 		const todayVal = today.toISOString();
 
 		if (!dateVal) {
-			Alert.alert('Hello!', 'Please select a day to book your reservation.');
+			Alert.alert("Hello!", "Please select a day to book your reservation.");
 			return;
 		}
 
-		navigation.navigate("Times", { dateVal, people, id, todayVal })
+		navigation.navigate("Times", { dateVal, people, id, todayVal });
 	}
-
-	// useEffect(() => {
-	// 	navigation.addListener("focus", () => {
-	// 		// redirect to phone screen if no phone # is saved
-	// 		PhoneService.userHasPhoneNo()
-	// 		.then((result) => {
-	// 			if (!result) navigation.navigate("Phone");
-	// 		})
-	// 		.catch((err) => {
-	// 			console.log(err);
-	// 		});
-	// 	})
-	// }, []);
 
 	return (
 		<View style={styles.container}>

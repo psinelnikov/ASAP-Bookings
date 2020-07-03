@@ -1,25 +1,18 @@
 import React, { useState, useEffect } from "react";
 import { ListItem } from "react-native-elements";
-import { NavigationContainer, CommonActions } from "@react-navigation/native";
 import {
 	StyleSheet,
 	Text,
 	View,
 	ToastAndroid,
-	RefreshControl,
-	Image,
 	FlatList,
 	Alert,
 } from "react-native";
-import { CalendarList } from "react-native-calendars";
-import DateTimePicker from "@react-native-community/datetimepicker";
 import moment from "moment";
 import "moment-round";
-import { Picker } from "@react-native-community/picker";
 
 import Bookings from "../src/services/Bookings";
 import CustomModal from "../components/CustomModal";
-import AuthService from "../src/services/Auth";
 
 export default Booking = ({ route, navigation }) => {
 	const { dateVal, people, id, todayVal } = route.params;
@@ -125,7 +118,7 @@ export default Booking = ({ route, navigation }) => {
 									endDate: localEndDate,
 									guests: localGuests,
 								});
-	
+
 								if (updated) {
 									showToast("Booking Successfully Updated!");
 									// refresh();
@@ -150,7 +143,7 @@ export default Booking = ({ route, navigation }) => {
 								);
 								if (created) {
 									showToast("Booking Successfully Created!");
-								//	refresh();
+									//	refresh();
 									navigation.reset({
 										index: 2,
 										routes: [{ name: "ViewBookingsStack" }],

@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from "react";
-import { ListItem } from "react-native-elements";
+import React, { useState } from "react";
 import {
 	StyleSheet,
 	Text,
@@ -8,15 +7,12 @@ import {
 	ToastAndroid,
 	Alert,
 } from "react-native";
-import { CalendarList } from "react-native-calendars";
-import DateTimePicker from "@react-native-community/datetimepicker";
+
 import moment from "moment";
 import "moment-round";
-import { Picker } from "@react-native-community/picker";
 
 import Bookings from "../src/services/Bookings";
 import CustomModal from "../components/CustomModal";
-import AuthService from "../src/services/Auth";
 
 export default function BookingDetails({ navigation, route }) {
 	const { id, startDate, endDate, guests } = route.params;
@@ -43,8 +39,8 @@ export default function BookingDetails({ navigation, route }) {
 						margin: 10,
 					}}
 				>
-					<Text>Time of Booking:</Text>
 					<Text>Date of Booking:</Text>
+					<Text>Time of Booking:</Text>
 					<Text>Number of People:</Text>
 				</View>
 

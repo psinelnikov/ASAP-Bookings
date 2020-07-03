@@ -2,40 +2,40 @@ import { Firebase, Database } from "../integrations/firebase";
 import moment from "moment";
 
 import PushNotification from "./PushNotification";
-// import { getAllScheduledNotificationsAsync } from "expo-notifications";
-// import { Notifications } from "expo";
 
 export default class Bookings {
 	static addBooking(startDate, endDate, numOfGuests) {
 		return new Promise((resolve, reject) => {
 			const uid = Firebase.auth().currentUser.uid;
 			// Query for all bookings, check start and end dates
-			Database.collection("bookings").get()
+			Database.collection("bookings")
+				.get()
 				.then((querySnapshot) => {
 					if (Bookings.checkCollisions(querySnapshot, startDate, endDate)) {
 						// There was a collision
 						reject("Please try another date. This date is unavailable.");
 					} else {
-						const notificationTime = startDate - (30 * 60000); // 30 minutes before start
-						PushNotification.scheduleBookingNotification(notificationTime)
-						.then(notificationId => {
-							// Add to database
-							Database.collection("bookings")
-							.add({
-								owner: uid,
-								startDate: startDate,
-								endDate: endDate,
-								guests: numOfGuests,
-								created: new Date(),
-								notification: notificationId,
-							})
-							.then((docRef) => {
-								resolve(docRef.id);
-							})
-							.catch((err) => {
-								reject(err);
-							});
-						})
+						const notificationTime = startDate - 30 * 60000; // 30 minutes before start
+						PushNotification.scheduleBookingNotification(notificationTime).then(
+							(notificationId) => {
+								// Add to database
+								Database.collection("bookings")
+									.add({
+										owner: uid,
+										startDate: startDate,
+										endDate: endDate,
+										guests: numOfGuests,
+										created: new Date(),
+										notification: notificationId,
+									})
+									.then((docRef) => {
+										resolve(docRef.id);
+									})
+									.catch((err) => {
+										reject(err);
+									});
+							}
+						);
 					}
 				})
 				.catch((err) => {
@@ -46,19 +46,26 @@ export default class Bookings {
 
 	static getBlockedTimes(dates) {
 		return new Promise((resolve, reject) => {
-			Database.collection("bookings").get()
-			.then((querySnapshot) => {
-				for (let i = 0; i < dates.length; i++) {
-					if (Bookings.checkCollisions(querySnapshot, dates[i].startDate, dates[i].endDate)) {
-						dates[i].blocked = true;
+			Database.collection("bookings")
+				.get()
+				.then((querySnapshot) => {
+					for (let i = 0; i < dates.length; i++) {
+						if (
+							Bookings.checkCollisions(
+								querySnapshot,
+								dates[i].startDate,
+								dates[i].endDate
+							)
+						) {
+							dates[i].blocked = true;
+						}
 					}
-				}
-				//console.log(dates);
-				resolve(dates);
-			})
-			.catch(err => {
-				reject(err);
-			});
+					//console.log(dates);
+					resolve(dates);
+				})
+				.catch((err) => {
+					reject(err);
+				});
 		});
 	}
 
@@ -93,41 +100,52 @@ export default class Bookings {
 	static cancelBooking(id) {
 		return new Promise((resolve, reject) => {
 			const bookingRef = Database.collection("bookings").doc(id);
-			bookingRef.get().then(doc => {
-				const notificationId = doc.data().notification;
-				bookingRef.delete().then(() => {
-					PushNotification.cancelBookingNotification(notificationId).then(() => {
-						resolve("Done");
-					})
+			bookingRef
+				.get()
+				.then((doc) => {
+					const notificationId = doc.data().notification;
+					bookingRef.delete().then(() => {
+						PushNotification.cancelBookingNotification(notificationId).then(
+							() => {
+								resolve("Done");
+							}
+						);
+					});
+				})
+				.catch((err) => {
+					reject(err);
 				});
-			}).catch(err => {
-				reject(err);
-			});
-		})
+		});
 	}
 
-	static updateBooking(id, data) { // pass an object for data e.g. { guests: 2 }
+	static updateBooking(id, data) {
+		// pass an object for data e.g. { guests: 2 }
 		return new Promise((resolve, reject) => {
 			const bookingRef = Database.collection("bookings").doc(id);
-			bookingRef.get().then(doc => {
-				const notificationId = doc.data().notification;
-				PushNotification.cancelBookingNotification(notificationId)
-				.then(() => {
-					const notificationTime = (data.startDate || doc.data().startDate) - (30 * 60000); // 30 minutes before start
-					PushNotification.scheduleBookingNotification(notificationTime)
-					.then(notificationId => {
-						data.notification = notificationId;
-						bookingRef.update(data)
-						.then(() => {
-							resolve("Done");
-						})
-					});
+			bookingRef
+				.get()
+				.then((doc) => {
+					const notificationId = doc.data().notification;
+					PushNotification.cancelBookingNotification(notificationId).then(
+						() => {
+							const notificationTime =
+								(data.startDate || doc.data().startDate) - 30 * 60000; // 30 minutes before start
+							PushNotification.scheduleBookingNotification(
+								notificationTime
+							).then((notificationId) => {
+								data.notification = notificationId;
+								bookingRef.update(data).then(() => {
+									resolve("Done");
+								});
+							});
+						}
+					);
+				})
+				.catch((err) => {
+					console.log(err);
+					reject(err);
 				});
-			}).catch(err => {
-				console.log(err);
-				reject(err);
-			});
-		})
+		});
 	}
 
 	// Checks to see if there are any collisions with dates when making a new booking

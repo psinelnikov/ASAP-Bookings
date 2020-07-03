@@ -5,31 +5,6 @@ import Icon from "react-native-vector-icons/FontAwesome";
 import AuthService from "../src/services/Auth";
 
 export default Login = () => {
-	//state = { user: null };
-
-	// componentDidMount() {
-	// 	AuthService.subscribeAuthChange((user) => this.setState({ user }));
-	// }
-
-	// 	const { user } = this.state;
-
-	// 	if (user) {
-	// 		const avatar = user.photoURL && (
-	// 			<Image
-	// 				style={{ width: 50, height: 50 }}
-	// 				source={{ uri: user.photoURL }}
-	// 			/>
-	// 		);
-
-	// 		return (
-	// 			<View style={styles.container}>
-	// 				<Text>You are logged in!</Text>
-	// 				{avatar}
-	// 				<Button onPress={AuthService.logout} title="Logout" />
-	// 			</View>
-	// 		);
-	// 	}
-
 	return (
 		<>
 			<View style={{ flex: 3, justifyContent: "center" }}>
