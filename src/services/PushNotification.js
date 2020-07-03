@@ -30,7 +30,7 @@ export default class PushNotification {
     const identifier = await Notifications.scheduleNotificationAsync({
       content: {
         title: "Booking Reminder",
-        body: 'You have a booking for a dine-in in 30 minutes!',
+        body: 'Your reservation starts in 30 minutes!',
       },
       trigger: timestamp
       // trigger: {
